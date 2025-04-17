@@ -19,6 +19,11 @@ jobs:
         with:
           version: 8
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
       - name: Install Dependencies
         run: pnpm install
 
