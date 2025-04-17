@@ -1,25 +1,29 @@
 name: Build Success on PR
 
 on:
-    pull_request:
+  pull_request:
         branches:
             - main
-
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js
-              uses: actions/setup-node@v3
-              with:
-                node-version: '20'
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-            - name: Install Dependencies
-              run: pnpm install
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
-            - name: Generate Drizzle Client
-              run: pnpm db:generate
-            
-            - name: Run Build
-              run: pnpm run build
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Generate Drizzle Client
+        run: pnpm db:generate
+
+      - name: Run Build
+        run: pnpm run build
