@@ -1,1 +1,0 @@
-ALTER TABLE `users_table` ADD `createdAt` integer DEFAULT 1744135160387 NOT NULL;
