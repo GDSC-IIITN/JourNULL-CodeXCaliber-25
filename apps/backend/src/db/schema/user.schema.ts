@@ -27,5 +27,6 @@ export const usersRelations = relations(users, ({ many }) => ({
   timeCapsules: many(timeCapsules),
 }));
 
-export type User = InferSelectModel<typeof users>;
+
 export type InsUser = InferInsertModel<typeof users>;
+export type SelUser = InferSelectModel<typeof users>;
