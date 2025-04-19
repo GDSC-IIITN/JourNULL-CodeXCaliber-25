@@ -9,8 +9,16 @@
       "ESNext"
     ],
     "types": [
-      "@cloudflare/workers-types/2023-07-01"
+      "@cloudflare/workers-types/2023-07-01",
+      "node",
+      "bun"
     ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"
   },

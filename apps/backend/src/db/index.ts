@@ -1,7 +1,24 @@
 import { drizzle } from 'drizzle-orm/libsql';
-import { DATABASE_AUTH_TOKEN, DATABASE_URL } from '../constant';
 
-export const db = drizzle({ connection: {
-  url: DATABASE_URL, 
-  authToken: DATABASE_AUTH_TOKEN 
-}});
+export class CustomDrizzleClient {
+  private drizzleInstance: any | null = null;
+
+  constructor(private connection: { url: string; authToken: string }) {}
+
+  async client() {
+    // Return cached instance if available
+    if (this.drizzleInstance) {
+      return this.drizzleInstance;
+    }
+
+    // Create and cache the drizzle instance
+    this.drizzleInstance = drizzle({
+      connection: {
+        url: this.connection.url,
+        authToken: this.connection.authToken,
+      },
+    });
+
+    return this.drizzleInstance;
+  }
+}
