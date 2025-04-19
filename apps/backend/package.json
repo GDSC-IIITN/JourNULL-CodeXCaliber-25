@@ -2,13 +2,21 @@
   "name": "backend",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify"
+    "deploy": "wrangler deploy --minify",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@libsql/client": "^0.15.2",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.41.0",
     "hono": "^4.7.5"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250214.0",
+    "drizzle-kit": "^0.30.6",
+    "tsx": "^4.19.3",
     "wrangler": "^4.4.0"
   }
 }
