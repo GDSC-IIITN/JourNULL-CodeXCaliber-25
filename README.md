@@ -1,7 +1,7 @@
 # 📝 JourNULL
 
 ![Build](https://img.shields.io/github/actions/workflow/status/GDSC-IIITN/JourNULL-CodeXCaliber-25/build.yml?branch=main)
-![License: MIT](https://img.shields.io/github/license/GDSC-IIITN/JourNULL-CodeXCaliber-25)
+![GitHub License](https://img.shields.io/github/license/GDSC-IIITN/JourNULL-CodeXCaliber-25)
 ![Stars](https://img.shields.io/github/stars/GDSC-IIITN/JourNULL-CodeXCaliber-25?style=social)
 
 **JourNULL** is an AI-powered, multimodal journaling application designed to help users manage overthinking, stress, and emotional well-being. With seamless voice, text, and video input support, smart emotional analysis, and mood tracking insights powered by Groq, JourNULL provides a secure and deeply personalized mental health companion.
