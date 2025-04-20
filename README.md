@@ -8,7 +8,7 @@
 
 > “NULL your overthinking with JourNULL”
 
----
+
 
 ## 🚀 Features
 
@@ -21,7 +21,7 @@
 - 🧳 **Manifestation Jar & Time Capsule** – Save affirmations, goals, and future letters.
 - 🔐 **Secure Cloud Storage** – End-to-end encrypted journaling with privacy-first infrastructure.
 
----
+
 
 ## 🛠️ Tech Stack
 
@@ -41,25 +41,25 @@
 - `Cloudflare CDN` for fast delivery
 - `ChromaDB` (planned) for embedding-powered semantic search
 
----
+
 
 ## 🧱 System Architecture
 
 ![diagram-export-4-20-2025-6_00_43-PM](https://github.com/user-attachments/assets/91b96f09-d47b-430e-85b9-cfa3f56f6a47)
 
----
+
 
 ## 🧑‍💻 Contributing
 
 We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, coding guidelines, and more.
 
----
+
 
 ## 🗺️ Roadmap
 
 Check out our [ROADMAP.md](ROADMAP.md) to see what’s next, what we’re working on, and where you can contribute!
 
----
+
 
 ## 🎯 Target Audience
 
@@ -67,7 +67,7 @@ Check out our [ROADMAP.md](ROADMAP.md) to see what’s next, what we’re workin
 - **Therapists** – supportive journaling integration
 - **Everyday users** – emotional wellness & self-awareness
 
----
+
 
 ## ⚠️ Challenges Tackled
 
@@ -76,24 +76,23 @@ Check out our [ROADMAP.md](ROADMAP.md) to see what’s next, what we’re workin
 - Stigma around emotional expression
 - Privacy & data security in digital mental health
 
----
+
 
 ## 📦 Repository
 
 🔗 [GitHub – GDSC-IIITN/JourNULL-CodeXCaliber-25](https://github.com/GDSC-IIITN/JourNULL-CodeXCaliber-25)
 
----
+
 
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
 
----
+
 
 ## 🙌 Built By
 
 **Team Hackfinity** for **CodeXCaliber 2025**  
 Powered by [GDSC IIIT Nagpur](https://gdsc.community.dev/iiit-nagpur)
 
----
 
