@@ -6,7 +6,7 @@ export class CloudflareR2Service {
   private input = cloudflareR2ConfigSchema.safeParse({
     accountId: process.env.R2_ACCOUNT_ID,
     accessKeyId: process.env.R2_ACCESS_KEY_ID,
-    secretAccessKey: process.env.R2_SECRECT_ACCESS_KEY,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
     bucketName: process.env.R2_BUCKET_NAME,
   });
   accountId = this.input.success ? this.input.data.accountId : "";
