@@ -1,87 +1,99 @@
-# JourNULL-CodeXCaliber-25
-By Hackfinity
+# 📝 JourNULL
 
-## Turborepo starter
+![Build](https://img.shields.io/github/actions/workflow/status/GDSC-IIITN/JourNULL-CodeXCaliber-25/build.yml?branch=main)
+![License: MIT](https://img.shields.io/github/license/GDSC-IIITN/JourNULL-CodeXCaliber-25)
+![Stars](https://img.shields.io/github/stars/GDSC-IIITN/JourNULL-CodeXCaliber-25?style=social)
 
-This Turborepo starter is maintained by the Turborepo core team.
+**JourNULL** is an AI-powered, multimodal journaling application designed to help users manage overthinking, stress, and emotional well-being. With seamless voice, text, and video input support, smart emotional analysis, and mood tracking insights powered by Groq, JourNULL provides a secure and deeply personalized mental health companion.
 
-## Using this example
+> “NULL your overthinking with JourNULL”
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
-```
+## 🚀 Features
 
-## What's inside?
+- 🧠 **Multimodal Journaling** – Text, voice, and video-based journaling with auto transcription.
+- 💬 **Groq-Powered Emotional Insights** – Smart AI-generated summaries and mood feedback.
+- 🌙 **Dream Interpretation** – AI interpretation of subconscious thoughts and dream symbols.
+- 📈 **Mood Tracking & Alerts** – Visual mood timelines and personalized emotional trend alerts.
+- 🧹 **Guilt Dumper** – Safe emotional release for negative thoughts.
+- 🙏 **Gratitude Journaling** – Reflect on positives and build mental resilience.
+- 🧳 **Manifestation Jar & Time Capsule** – Save affirmations, goals, and future letters.
+- 🔐 **Secure Cloud Storage** – End-to-end encrypted journaling with privacy-first infrastructure.
 
-This Turborepo includes the following packages/apps:
+---
 
-### Apps and Packages
+## 🛠️ Tech Stack
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### 🗂 Monorepo Setup
+- `Turborepo` for managing fullstack apps
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### 🌐 Frontend
+- `Next.js`, `TipTap`, `Tldraw`, `React Query`
 
-### Utilities
+### ⚙️ Backend
+- `Hono` on `Cloudflare Workers` with `Bun runtime`
+- `Drizzle ORM` with `Turso (libSQL)` for storage
+- `Groq` LLMs for emotional intelligence & insights
 
-This Turborepo has some additional tools already setup for you:
+### 💾 Storage & Infra
+- `S3-compatible Object Store` for media
+- `Cloudflare CDN` for fast delivery
+- `ChromaDB` (planned) for embedding-powered semantic search
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+---
 
-### Build
+## 🧱 System Architecture
 
-To build all apps and packages, run the following command:
+![diagram-export-4-20-2025-6_00_43-PM](https://github.com/user-attachments/assets/91b96f09-d47b-430e-85b9-cfa3f56f6a47)
 
-```
-cd my-turborepo
-pnpm build
-```
+---
 
-### Develop
+## 🧑‍💻 Contributing
 
-To develop all apps and packages, run the following command:
+We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, coding guidelines, and more.
 
-```
-cd my-turborepo
-pnpm dev
-```
+---
 
-### Remote Caching
+## 🗺️ Roadmap
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+Check out our [ROADMAP.md](ROADMAP.md) to see what’s next, what we’re working on, and where you can contribute!
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+---
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+## 🎯 Target Audience
 
-```
-cd my-turborepo
-npx turbo login
-```
+- **Students & Professionals** – stress & overthinking relief
+- **Therapists** – supportive journaling integration
+- **Everyday users** – emotional wellness & self-awareness
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+---
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## ⚠️ Challenges Tackled
 
-```
-npx turbo link
-```
+- Youth mental health crisis
+- Overthinking & guilt management
+- Stigma around emotional expression
+- Privacy & data security in digital mental health
 
-## Useful Links
+---
 
-Learn more about the power of Turborepo:
+## 📦 Repository
 
-- [Tasks](https://turbo.build/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/docs/reference/command-line-reference)
+🔗 [GitHub – GDSC-IIITN/JourNULL-CodeXCaliber-25](https://github.com/GDSC-IIITN/JourNULL-CodeXCaliber-25)
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 🙌 Built By
+
+**Team Hackfinity** for **CodeXCaliber 2025**  
+Powered by [GDSC IIIT Nagpur](https://gdsc.community.dev/iiit-nagpur)
+
+---
+
