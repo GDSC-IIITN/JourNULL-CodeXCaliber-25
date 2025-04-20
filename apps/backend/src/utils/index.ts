@@ -1,29 +1,7 @@
+import { CustomChromaClient } from "@/lib/chromaDB";
+import { CloudflareEmbeddingResponse } from "@/types/utils";
 import axios from "axios";
-import { IEmbeddingFunction } from "chromadb";
 import { Context } from "hono";
-
-import { z } from 'zod';
-
-export const CloudflareEmbeddingResponse = z.object({
-  result: z.object({
-    data: z.array(z.array(z.number())),
-    response: z.null(),
-    shape: z.array(z.number()),
-    pooling: z.string(),
-    usage: z.object({
-      prompt_tokens: z.number(),
-      completion_tokens: z.number(),
-      total_tokens: z.number()
-    })
-  }),
-  success: z.boolean(),
-  errors: z.array(z.any()),
-  messages: z.array(z.any())
-});
-
-type CloudflareEmbeddingResponseType = z.infer<typeof CloudflareEmbeddingResponse>;
-
-
 
 export class CloudFlareEmbeddingFunction {
     private api_key: string;
@@ -58,4 +36,15 @@ export class CloudFlareEmbeddingFunction {
         return parsed.data.result.data;
    
     }
+}
+
+// util to get the primary collection (pookie-collection 🎀)
+export const getPookie = async (c: Context) => {
+    const embeddingFunction = new CloudFlareEmbeddingFunction(c.env.CF_EMBEDDING_API_KEY);
+    const client = await new CustomChromaClient(c).client();
+
+    return client.getCollection({
+        name: 'pookie-collection',
+        embeddingFunction,
+    });
 }

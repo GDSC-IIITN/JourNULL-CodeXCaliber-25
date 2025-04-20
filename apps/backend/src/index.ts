@@ -1,26 +1,20 @@
 import { Hono } from 'hono';
-import { CustomChromaClient } from './lib/chromaDB';
-import { CloudFlareEmbeddingFunction } from './util';
+import { prettyJSON } from 'hono/pretty-json';
+import { poweredBy } from 'hono/powered-by';
+import { logger } from 'hono/logger';
+import { Env } from './types/bindings';
+import { routes } from './routes';
+import { showRoutes } from 'hono/dev';
 
-type Env = {
-  DATABASE_URL: string;
-  DATABASE_AUTH_TOKEN: string;
-  CHROMA_SERVER_URL: string;
-  CHROMA_USERNAME: string;
-  CHROMA_PASSWORD: string;
-  CF_EMBEDDING_API_KEY: string;
-  CF_EMBEDDING_MODEL: string;
-}
+const app = new Hono<{Bindings: Env}>();
 
-const app = new Hono<
-  {
-    Bindings: Env;
-  }
->();
+app.use(prettyJSON());
+app.use(poweredBy());
+app.use(logger());
 
+app.route('/', routes())
 
-app.get('/', async (c) => {
-  return c.text('Hello World!');
-})
+showRoutes(app);
+
 
 export default app;
