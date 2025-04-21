@@ -1,6 +1,6 @@
 # Contributing to JourNULL‑CodeXCaliber‑25
 
-Thank you for helping improve this project! Whether you’re fixing bugs, proposing features, or enhancing docs, your efforts are welcome. Please follow these guidelines to make the process smooth for everyone.
+Thank you for helping make this project better! Whether you’re fixing bugs, proposing new features, improving documentation, or just giving feedback, your contributions are welcome and appreciated.
 
 ---
 
@@ -18,39 +18,87 @@ Thank you for helping improve this project! Whether you’re fixing bugs, propos
 
 ## Getting Started
 
-1. **Fork** this repository  
+1. **Fork** this repository on GitHub  
 2. **Clone** your fork locally  
-3. **Create** a branch for your work (`feature/xyz` or `fix/abc`)  
-4. **Write** clear, focused commits  
-5. **Push** your branch and open a PR  
+3. **Create** a branch for your work:  
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```  
+4. **Make** your changes in small, focused commits  
+5. **Push** your branch to your fork  
+6. **Open** a Pull Request against `main` in the upstream repo  
 
 ---
 
 ## Development Workflow
 
-- Use descriptive branch names:  
+- Use clear, descriptive branch names:  
   - `feature/login-form`  
   - `fix/navbar-overlap`  
-- Keep changes scoped to one issue  
-- Run existing tests (if any) and add new ones as needed  
-- Follow existing code style and formatting  
+- Scope each branch to a single issue or feature  
+- Adhere to the project’s existing code style and formatting  
+- Run any existing tests and add new ones if appropriate  
 
 ---
 
 ## Local Setup
 
 **Prerequisites**  
-- Node.js ≥ 14.x  
-- npm or Yarn
+- Node.js version 14 or higher  
+- npm or Yarn  
 
-**Steps**  
+**Installation & Run**  
 ```bash
 # 1. Clone your fork
-git clone https://github.com/<your-user>/JourNULL-CodeXCaliber-25.git
+git clone https://github.com/<your-username>/JourNULL-CodeXCaliber-25.git
 cd JourNULL-CodeXCaliber-25
 
 # 2. Install dependencies
-npm install   # or yarn install
+npm install       # or yarn install
 
 # 3. Start the development server
-npm start     # or yarn start
+npm start         # or yarn start
+```
+
+---
+
+## Submitting Changes
+
+1. Push your branch to GitHub.  
+2. Open a Pull Request against `main`.  
+3. In your PR description:
+   - Reference the related issue (e.g., “Closes #13”)  
+   - Summarize your changes in bullet points  
+   - Include any relevant screenshots or testing steps  
+4. Wait for review and address feedback as needed.  
+
+---
+
+## Reporting Issues
+
+When opening an issue, please include:
+
+- A concise **title** and clear **description**  
+- Steps to **reproduce** the problem  
+- **Expected** vs. **actual** behavior  
+- Screenshots, logs, or error messages if applicable  
+
+---
+
+## Code of Conduct
+
+This project is governed by the [Contributor Covenant v2.1][covenant].  
+By participating, you agree to abide by its terms.  
+Please read the full text in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+---
+
+## Additional Resources
+
+- [Project README](README.md)  
+- [Style Guide](docs/STYLE_GUIDE.md)  
+- Join our Discord: `#support`  
+- Browse issues labeled [`help wanted`](https://github.com/GDSC-IIITN/JourNULL-CodeXCaliber-25/labels/help%20wanted)  
+
+[covenant]: https://www.contributor-covenant.org/version/2/1/code_of_conduct/
+```
