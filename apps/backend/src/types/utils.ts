@@ -10,7 +10,7 @@ export const CloudflareEmbeddingResponse = z.object({
       prompt_tokens: z.number(),
       completion_tokens: z.number(),
       total_tokens: z.number()
-    })
+    }),
   }),
   success: z.boolean(),
   errors: z.array(z.any()),

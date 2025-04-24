@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  journull:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Frontend Next.js
+      - "8787:8787"  # Backend Wrangler/Cloudflare Workers
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/apps/frontend/node_modules
+      - /app/apps/backend/node_modules
+    command: pnpm run dev

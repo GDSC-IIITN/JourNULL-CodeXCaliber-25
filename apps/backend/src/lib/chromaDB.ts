@@ -16,6 +16,7 @@ export class CustomChromaClient {
     const username = this.context.env.CHROMA_USERNAME;
     const password = this.context.env.CHROMA_PASSWORD;
     const serverUrl = this.context.env.CHROMA_SERVER_URL;
+
     
     if (!username || !password || !serverUrl) {
       throw new Error('Missing required ChromaDB environment variables');

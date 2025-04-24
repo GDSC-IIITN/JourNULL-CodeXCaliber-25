@@ -1,7 +1,10 @@
 import { drizzle } from 'drizzle-orm/libsql';
+import { LibSQLDatabase } from 'drizzle-orm/libsql';
+import { createClient } from '@libsql/client';
+import * as schema from './schema'
 
 export class CustomDrizzleClient {
-  private drizzleInstance: any | null = null;
+  private drizzleInstance: LibSQLDatabase<typeof schema> | null = null;
 
   constructor(private connection: { url: string; authToken: string }) {}
 
@@ -10,14 +13,12 @@ export class CustomDrizzleClient {
     if (this.drizzleInstance) {
       return this.drizzleInstance;
     }
-
     // Create and cache the drizzle instance
-    this.drizzleInstance = drizzle({
-      connection: {
-        url: this.connection.url,
-        authToken: this.connection.authToken,
-      },
+    const client = createClient({
+      url: this.connection.url,
+      authToken: this.connection.authToken,
     });
+    this.drizzleInstance = drizzle(client, { schema });
 
     return this.drizzleInstance;
   }

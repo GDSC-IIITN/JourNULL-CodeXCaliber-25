@@ -6,4 +6,10 @@ export type Env = {
   CHROMA_PASSWORD: string;
   CF_EMBEDDING_API_KEY: string;
   CF_EMBEDDING_MODEL: string;
+  CF_ACCOUNT_ID: string;
+  AI: Ai;
 }
+
+import type { Context } from 'hono';
+
+export type ContextWithEnv = Context<{ Bindings: Env }>;
