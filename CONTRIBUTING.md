@@ -43,9 +43,11 @@ Thank you for helping make this project better! Whether you’re fixing bugs, pr
 
 ## Local Setup
 
-**Prerequisites**  
-- Node.js version 14 or higher  
-- npm or Yarn  
+**Prerequisites**
+
+- pnpm (preferred package manager)
+- Bun (runtime for backend)
+- Node.js version 16 or higher 
 
 **Installation & Run**  
 ```bash
@@ -53,13 +55,15 @@ Thank you for helping make this project better! Whether you’re fixing bugs, pr
 git clone https://github.com/<your-username>/JourNULL-CodeXCaliber-25.git
 cd JourNULL-CodeXCaliber-25
 
-# 2. Install dependencies
-npm install       # or yarn install
+# 2. Install dependencies using pnpm
+pnpm install
 
 # 3. Start the development server
-npm start         # or yarn start
-```
+pnpm start
 
+# 4. For backend, ensure Bun is installed and run using:
+bun dev
+```
 ---
 
 ## Submitting Changes
@@ -101,4 +105,3 @@ Please read the full text in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 - Browse issues labeled [`help wanted`](https://github.com/GDSC-IIITN/JourNULL-CodeXCaliber-25/labels/help%20wanted)  
 
 [covenant]: https://www.contributor-covenant.org/version/2/1/code_of_conduct/
-```
