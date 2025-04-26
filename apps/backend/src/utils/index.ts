@@ -1,50 +1,116 @@
 import { CustomChromaClient } from "@/lib/chromaDB";
-import { CloudflareEmbeddingResponse } from "@/types/utils";
 import axios from "axios";
+
 import { Context } from "hono";
+import { CloudflareEmbeddingResponse } from "@/types/utils";
 
 export class CloudFlareEmbeddingFunction {
     private api_key: string;
     private model_name: string;
+    private account_id: string;
 
-    constructor(api_key: string) {
+    constructor(api_key: string, account_id?: string, model_name?: string) {
+        if (!api_key || api_key.trim() === '') {
+            throw new Error('Cloudflare API key is required');
+        }
+        
         this.api_key = api_key;
-        this.model_name = "@cf/baai/bge-m3";
+        // Use the provided account ID or default to environment variable
+        this.account_id = account_id || process.env.CF_ACCOUNT_ID || '';
+        // Use the provided model name or default to @cf/baai/bge-m3
+        this.model_name = model_name || process.env.CF_EMBEDDING_MODEL || '@cf/baai/bge-m3';
+        
+        if (!this.account_id) {
+            throw new Error('Cloudflare account ID is required');
+        }
     }
 
     public async generate(texts: string[]): Promise<number[][]> {
-        const response = await axios.post(
-            `https://api.cloudflare.com/client/v4/accounts/de78d66e79f088b038213c70f0bff2a1/ai/run/${this.model_name}`,
-            {
-                text: texts
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${this.api_key}`,
-                    'Content-Type': 'application/json'
+        try {
+            const response = await axios.post(
+                `https://api.cloudflare.com/client/v4/accounts/${this.account_id}/ai/run/${this.model_name}`,
+                {
+                    text: texts
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${this.api_key}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            
+            if (response.status !== 200) {
+                console.error(`Error fetching embeddings: ${response.status} ${response.statusText}`);
+                throw new Error(`Error fetching embeddings: ${response.statusText}`);
+            }
+            
+            const parsed = CloudflareEmbeddingResponse.safeParse(response.data);
+            if (!parsed.success) {
+                console.error("Error parsing response:", parsed.error);
+                throw new Error("Error parsing response");
+            }
+            
+            return parsed.data.result.data;
+        } catch (error) {
+            console.error("Cloudflare AI embeddings error:", error);
+            if (axios.isAxiosError(error)) {
+                if (error.response?.status === 401) {
+                    throw new Error("Authentication error: Invalid Cloudflare API key");
+                } else if (error.response) {
+                    throw new Error(`Cloudflare API error: ${error.response.status} - ${error.response.statusText}`);
                 }
             }
-        );
-        if (response.status !== 200) {
-            throw new Error(`Error fetching embeddings: ${response.statusText}`);
+            throw error;
         }
-        const parsed = CloudflareEmbeddingResponse.safeParse(response.data);
-        if (!parsed.success) {
-            console.error("Error parsing response:", parsed.error);
-            throw new Error("Error parsing response");
-        }
-        return parsed.data.result.data;
-   
     }
 }
 
 // util to get the primary collection (pookie-collection 🎀)
 export const getPookie = async (c: Context) => {
-    const embeddingFunction = new CloudFlareEmbeddingFunction(c.env.CF_EMBEDDING_API_KEY);
+    const embeddingFunction = new CloudFlareEmbeddingFunction(
+        c.env.CF_EMBEDDING_API_KEY,
+        c.env.CF_ACCOUNT_ID,
+        c.env.CF_EMBEDDING_MODEL
+    );
+
     const client = await new CustomChromaClient(c).client();
 
-    return client.getCollection({
-        name: 'pookie-collection',
-        embeddingFunction,
-    });
+    let collection;
+    try {
+        collection = await client.getCollection({
+            name: 'pookie-collection',
+            embeddingFunction,
+        });
+    } catch (error) {
+        // Create collection if pookie 🎀 doesn't exist 
+        collection = await client.createCollection({
+            name: 'pookie-collection',
+            embeddingFunction,
+        });
+    }
+
+    return collection;
 }
+
+export const getRelevantEntries = async(current_entry: string, ctx: Context)  =>{
+    try {
+        const collection = await getPookie(ctx);
+        const embeddingFunction = new CloudFlareEmbeddingFunction(
+            ctx.env.CF_EMBEDDING_API_KEY,
+            ctx.env.CF_ACCOUNT_ID,
+            ctx.env.CF_EMBEDDING_MODEL
+        );
+        const embedding = await embeddingFunction.generate([current_entry]);
+        const queryResult = await collection.query({
+            queryEmbeddings: embedding,
+            nResults: 5,
+        });
+        
+        return queryResult;
+    } catch (error) {
+        console.error('Error getting relevant entries:', error);
+        throw new Error('Failed to get relevant entries');
+    }
+}
+
