@@ -1,4 +1,5 @@
 import { drizzle } from 'drizzle-orm/libsql';
+import * as schema from './schema' 
 
 export class CustomDrizzleClient {
   private drizzleInstance: any | null = null;
@@ -17,6 +18,7 @@ export class CustomDrizzleClient {
         url: this.connection.url,
         authToken: this.connection.authToken,
       },
+      schema
     });
 
     return this.drizzleInstance;
