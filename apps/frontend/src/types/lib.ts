@@ -5,4 +5,5 @@ export const cloudflareR2ConfigSchema = z.object({
   accessKeyId: z.string().min(1, "R2_ACCESS_KEY_ID is required"),
   secretAccessKey: z.string().min(1, "R2_SECRET_ACCESS_KEY is required"),
   bucketName: z.string().min(1, "R2_BUCKET_NAME is required"),
+  region: z.string().min(1, "R2_REGION is required").default("auto"),
 });
