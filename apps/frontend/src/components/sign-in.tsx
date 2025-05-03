@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -121,7 +121,7 @@ export default function SignIn() {
                                 await signIn.social(
                                     {
                                         provider: "google",
-                                        callbackURL: "/dashboard",
+                                        callbackURL: window.location.origin + "/dashboard"
                                     },
                                     {
                                         onRequest: () => {
@@ -258,20 +258,6 @@ export default function SignIn() {
                     </div>
                 </div>
             </CardContent>
-            <CardFooter>
-                <div className="flex justify-center w-full border-t py-4">
-                    <p className="text-center text-xs text-neutral-500">
-                        Powered by{" "}
-                        <Link
-                            href="https://better-auth.com"
-                            className="underline"
-                            target="_blank"
-                        >
-                            <span className="dark:text-orange-200/90">better-auth.</span>
-                        </Link>
-                    </p>
-                </div>
-            </CardFooter>
         </Card>
     );
 }

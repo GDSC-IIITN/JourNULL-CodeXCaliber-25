@@ -50,8 +50,8 @@ export const createAuth = async (env: Env) => {
             google: {
                 clientId: process.env.GOOGLE_CLIENT_ID as string,
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-                redirectURI: 'http://localhost:3000/dashboard',
-                // Redirect URI after authentication
+                // redirectURI: 'http://localhost:3000/dashboard',
+                // // Redirect URI after authentication
             },
 
         },

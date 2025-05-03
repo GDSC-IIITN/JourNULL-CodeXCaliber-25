@@ -5,14 +5,18 @@ import { logger } from 'hono/logger';
 import { Env } from './types/bindings';
 import { routes } from './routes';
 import { showRoutes } from 'hono/dev';
-import { createAuth } from './lib/auth';
+import { auth, createAuth } from './lib/auth';
 import { authMiddleware } from './middleware/auth.middleware';
 import { cors } from 'hono/cors';
 
 const app = new Hono<{
     Bindings: Env,
+    Variables: {
+        user: typeof auth.$Infer.Session.user | null
+        session: typeof auth.$Infer.Session.session | null
+    }
 
-}>();
+}>({ strict: false });
 
 app.use(prettyJSON());
 app.use(poweredBy());
@@ -24,7 +28,7 @@ app.use(
         allowHeaders: ["Content-Type", "Authorization"],
         allowMethods: ["POST", "GET", "OPTIONS"],
         exposeHeaders: ["Content-Length"],
-        maxAge: 600,
+        maxAge: 86400,
         credentials: true,
     }),
 );

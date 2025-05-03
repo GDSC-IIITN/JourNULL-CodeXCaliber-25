@@ -3,7 +3,7 @@ import {
 } from "better-auth/react";
 
 export const authClient = createAuthClient({
-    baseURL: process.env.BACKEND_URL || "http://localhost:8787",
+    baseURL: "http://localhost:8787/api/auth",
 })
 
 export const {

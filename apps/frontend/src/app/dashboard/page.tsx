@@ -1,5 +1,6 @@
 "use client";
 import { useSession } from "@/lib/auth-client";
+import Image from "next/image";
 
 export default function Dashboard() {
     // Use the useSession hook to get session data including user information
@@ -16,10 +17,12 @@ export default function Dashboard() {
                     <h2 className="text-xl font-semibold mb-2">Your Profile</h2>
                     <div className="flex items-center gap-4">
                         {session.user.image && (
-                            <img
+                            <Image
                                 src={session.user.image}
                                 alt="Profile"
                                 className="w-16 h-16 rounded-full"
+                                width={64}
+                                height={64}
                             />
                         )}
                         <div>
