@@ -1,26 +1,10 @@
 "use client";
 import { useSession } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
 
 export default function Dashboard() {
     // Use the useSession hook to get session data including user information
     const { data: session } = useSession();
 
-    // If not authenticated, redirect to login
-    if (status === "unauthenticated") {
-        redirect("/");
-    }
-
-    // Show loading state while checking authentication
-    if (status === "loading") {
-        return (
-            <div className="flex justify-center items-center min-h-screen">
-                <p>Loading...</p>
-            </div>
-        );
-    }
-
-    // Now you can access the user data from the session
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
