@@ -1,6 +1,7 @@
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
-import { users } from "./user.schema";
+import { user } from "./auth-schema";
+
 
 export const guilts = sqliteTable(
   "guilts",
@@ -13,15 +14,15 @@ export const guilts = sqliteTable(
       .defaultNow(),
     userId: integer("user_id")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => user.id, { onDelete: "cascade" }),
   },
   (table) => [index("guilt_user_id_idx").on(table.userId)]
 );
 
 export const guiltsRelations = relations(guilts, ({ one }) => ({
-  user: one(users, {
+  user: one(user, {
     fields: [guilts.userId],
-    references: [users.id],
+    references: [user.id],
   }),
 }));
 

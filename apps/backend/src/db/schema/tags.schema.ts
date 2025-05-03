@@ -35,6 +35,17 @@ export const tagsRelations = relations(tags, ({ many }) => ({
   journals: many(journalTags),
 }));
 
+export const journalTagsRelations = relations(journalTags, ({ one }) => ({
+  journal: one(journals, {
+    fields: [journalTags.journalId],
+    references: [journals.id],
+  }),
+  tag: one(tags, {
+    fields: [journalTags.tagName],
+    references: [tags.name],
+  }),
+}));
+
 export type Tag = InferSelectModel<typeof tags>;
 export type InsTag = InferInsertModel<typeof tags>;
 export type JournalTag = InferSelectModel<typeof journalTags>;
