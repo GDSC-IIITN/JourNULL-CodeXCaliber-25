@@ -1,4 +1,5 @@
 "use client";
+import { ModeToggle } from "@/components/theme/theme-toggle";
 import { useSession } from "@/lib/auth-client";
 import Image from "next/image";
 
@@ -8,8 +9,13 @@ export default function Dashboard() {
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-            <p className="mb-4">Welcome to the dashboard!</p>
+            <div className="flex items-center justify-between mb-4">
+                <div>
+                    <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+                    <p className="mb-4">Welcome to the dashboard!</p>
+                </div>
+                <ModeToggle />
+            </div>
 
             {/* Display user information */}
             {session?.user && (
