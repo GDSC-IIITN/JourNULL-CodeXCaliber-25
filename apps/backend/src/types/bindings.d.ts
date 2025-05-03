@@ -1,3 +1,4 @@
+
 export type Env = {
   DATABASE_URL: string;
   DATABASE_AUTH_TOKEN: string;
@@ -7,3 +8,8 @@ export type Env = {
   CF_EMBEDDING_API_KEY: string;
   CF_EMBEDDING_MODEL: string;
 }
+
+// export type Variables = {
+//   user: typeof auth.$Infer.Session.user | null;
+//   session: typeof auth.$Infer.Session.session | null
+// }

@@ -1,6 +1,6 @@
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { users } from "./user.schema";
 import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
+import { user } from "./auth-schema";
 
 export const timeCapsules = sqliteTable(
   "time_capsules",
@@ -11,15 +11,15 @@ export const timeCapsules = sqliteTable(
     unlockTime: integer("unlock_time", { mode: "timestamp" }).notNull(),
     userId: integer("user_id")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => user.id, { onDelete: "cascade" }),
   },
   (table) => [index("time_capsule_user_id_idx").on(table.userId)]
 );
 
 export const timeCapsuleRelations = relations(timeCapsules, ({ one }) => ({
-  user: one(users, {
+  user: one(user, {
     fields: [timeCapsules.userId],
-    references: [users.id],
+    references: [user.id],
   }),
 }));
 

@@ -1,7 +1,8 @@
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { users } from "./user.schema";
+
 import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
 import { journalTags } from "./tags.schema";
+import { user } from "./auth-schema";
 
 export const journals = sqliteTable(
   "journals",
@@ -12,15 +13,15 @@ export const journals = sqliteTable(
     category: text("category").notNull().$type<"journal" | "dreamJournal">(),
     userId: integer("user_id")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => user.id, { onDelete: "cascade" }),
   },
   (table) => [index("journal_user_id_idx").on(table.userId)]
 );
 
 export const journalsRelations = relations(journals, ({ one, many }) => ({
-  user: one(users, {
+  user: one(user, {
     fields: [journals.userId],
-    references: [users.id],
+    references: [user.id],
   }),
   tags: many(journalTags),
 }));
