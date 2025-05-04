@@ -1,6 +1,6 @@
 "use client";
 import { ModeToggle } from "@/components/theme/theme-toggle";
-import { useSession } from "@/lib/auth-client";
+import { useSession } from "@/lib/auth/auth-client";
 import Image from "next/image";
 
 export default function Dashboard() {
