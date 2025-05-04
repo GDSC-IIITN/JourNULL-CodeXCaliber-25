@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-export const id = z.coerce.string().describe('Snowflake ID');
-
+export const id = z.coerce.string().describe('Primary Key');
 
 export type ID = z.infer<typeof id>;
 
@@ -11,7 +10,7 @@ export const ResponseSchema = z.object({
   message: z.any(),
 });
 
-export const defaultEmptyString = z.string().trim().min(1).default('');
+export const defaultEmptyString = z.string().trim().min(1);
 
 export const dateString = z.coerce
   .string()
@@ -33,31 +32,3 @@ export const baseEntitySchema = z.object({
 });
 
 export type BaseEntity = z.infer<typeof baseEntitySchema>;
-
-export type ExcludeBaseProps<
-  T extends Record<string, unknown>,
-  E extends keyof T = keyof BaseEntity,
-> = Omit<T, keyof BaseEntity | E>;
-
-export const excludeBaseProps = <
-  T extends z.ZodObject<(typeof baseEntitySchema)['shape']>,
->(
-  schema: T
-) => {
-  return schema.omit({
-    id: true,
-    created_at: true,
-    updated_at: true,
-  }) as unknown as StripBaseProps<T>;
-};
-
-export type StripBaseProps<
-  T extends z.ZodObject<(typeof baseEntitySchema)['shape'] & z.ZodRawShape>,
-> = Omit<T, 'shape'> & {
-  shape: Omit<
-    {
-      [K in keyof T['shape']]: T['shape'][K];
-    },
-    keyof BaseEntity
-  >;
-};

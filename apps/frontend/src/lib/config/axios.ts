@@ -29,6 +29,7 @@ Axios.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             // Clear the session via Better Auth client
+
             authClient.signOut()
             redirect('/auth/login')
         }

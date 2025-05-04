@@ -1,5 +1,6 @@
 "use client";
 import { ModeToggle } from "@/components/theme/theme-toggle";
+// import { useDev } from "@/hooks/dev";
 import { useSession } from "@/lib/auth/auth-client";
 import Image from "next/image";
 
@@ -7,11 +8,14 @@ export default function Dashboard() {
     // Use the useSession hook to get session data including user information
     const { data: session } = useSession();
 
+    // const { getHealth } = useDev()
+    // console.log("Health check: ", getHealth.data)
+
     return (
         <div className="p-6">
             <div className="flex items-center justify-between mb-4">
                 <div>
-                    <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+                    <h1 className="text-2xl font-bold mb-4 ">Dashboard</h1>
                     <p className="mb-4">Welcome to the dashboard!</p>
                 </div>
                 <ModeToggle />
