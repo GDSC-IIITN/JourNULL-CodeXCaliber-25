@@ -1,18 +1,15 @@
 "use client";
 import { ModeToggle } from "@/components/theme/theme-toggle";
-<<<<<<< Updated upstream
-import { useSession } from "@/lib/auth-client";
-=======
-import { useDev } from "@/hooks/dev";
+// import { useDev } from "@/hooks/dev";
 import { useSession } from "@/lib/auth/auth-client";
->>>>>>> Stashed changes
 import Image from "next/image";
 
 export default function Dashboard() {
     // Use the useSession hook to get session data including user information
     const { data: session } = useSession();
 
-    const { getHealth } = useDev()
+    // const { getHealth } = useDev()
+    // console.log("Health check: ", getHealth.data)
 
     return (
         <div className="p-6">

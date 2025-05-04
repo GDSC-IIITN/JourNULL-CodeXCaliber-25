@@ -3,32 +3,41 @@ name: Build Success on PR
 on:
   pull_request:
   push:
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID || 'R2_ACCESS_KEY_ID' }}
+      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY || 'R2_SECRET_ACCESS_KEY' }}
+      R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME || 'R2_BUCKET_NAME' }}
+      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID || 'R2_ACCOUNT_ID' }}
+      NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL || 'http://localhost:3000' }}
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL || 'http://localhost:8787' }}
+      NEXT_PUBLIC_AUTH_BASE_URL: ${{ secrets.NEXT_PUBLIC_AUTH_BASE_URL || 'http://localhost:8787/api/auth' }}
     steps:
       - uses: actions/checkout@v3
+      
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-
+      
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
-
+      
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-
+      
       - name: Install Dependencies
         run: pnpm install
-
+      
       - name: Generate Drizzle Client
         run: pnpm db:generate
-
+      
       - name: Run Build
         run: pnpm run build

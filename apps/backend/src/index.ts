@@ -21,16 +21,15 @@ const app = new Hono<{
 app.use(prettyJSON());
 app.use(poweredBy());
 app.use(logger());
-app.use(
-    "/api/auth/*",
-    cors({
-        origin: "http://localhost:3000",
-        allowHeaders: ["Content-Type", "Authorization"],
-        allowMethods: ["POST", "GET", "OPTIONS"],
-        exposeHeaders: ["Content-Length"],
-        maxAge: 86400,
-        credentials: true,
-    }),
+
+app.use("/api/auth/*", cors({
+    origin: "http://localhost:3000",
+    allowHeaders: ["Content-Type", "Authorization"],
+    allowMethods: ["POST", "GET", "OPTIONS"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 86400,
+    credentials: true,
+}),
 );
 app.use('*', authMiddleware)
 

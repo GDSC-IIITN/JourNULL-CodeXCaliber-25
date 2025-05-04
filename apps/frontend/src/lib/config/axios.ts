@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Better Auth client instance
 import { redirect } from 'next/navigation'
-import { authClient } from './auth-client'
+import { authClient } from '../auth/auth-client'
 
 const Axios = axios.create({
     baseURL: 'http://localhost:8787',
