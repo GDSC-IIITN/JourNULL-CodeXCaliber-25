@@ -37,10 +37,10 @@ export const createAuth = async (env: Env) => {
                 session,
                 account,
                 verification
-            } // or "mysql", "sqlite"
+            }
         }),
 
-        trustedOrigins: ['http://localhost:3000'],
+        trustedOrigins: [env.FRONTEND_URL],
 
         emailAndPassword: {
             enabled: true
@@ -48,10 +48,18 @@ export const createAuth = async (env: Env) => {
 
         socialProviders: {
             google: {
-                clientId: process.env.GOOGLE_CLIENT_ID as string,
-                clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-                // redirectURI: 'http://localhost:3000/dashboard',
-                // // Redirect URI after authentication
+                clientId: env.GOOGLE_CLIENT_ID as string,
+                clientSecret: env.GOOGLE_CLIENT_SECRET as string,
+            },
+            github: {
+                clientId: env.GITHUB_CLIENT_ID as string,
+                clientSecret: env.GITHUB_CLIENT_SECRET as string,
+            },
+            microsoft: {
+                clientId: env.MICROSOFT_CLIENT_ID as string,
+                clientSecret: env.MICROSOFT_CLIENT_SECRET as string,
+                tenantId: 'common', // or your tenant ID
+                requireSelectAccount: true
             },
 
         },

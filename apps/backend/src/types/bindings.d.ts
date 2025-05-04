@@ -7,6 +7,14 @@ export type Env = {
   CHROMA_PASSWORD: string;
   CF_EMBEDDING_API_KEY: string;
   CF_EMBEDDING_MODEL: string;
+  FRONTEND_URL: string;
+  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
+  MICROSOFT_CLIENT_ID: string;
+  MICROSOFT_CLIENT_SECRET: string;
+  MICROSOFT_TENANT_ID: string;
+  GITHUB_CLIENT_ID: string;
+  GITHUB_CLIENT_SECRET: string;
 }
 
 // export type Variables = {
