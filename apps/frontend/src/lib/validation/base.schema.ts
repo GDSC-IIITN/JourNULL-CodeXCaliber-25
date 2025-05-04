@@ -10,7 +10,7 @@ export const ResponseSchema = z.object({
   message: z.any(),
 });
 
-export const defaultEmptyString = z.string().trim().min(1).default('');
+export const defaultEmptyString = z.string().trim().min(1);
 
 export const dateString = z.coerce
   .string()
