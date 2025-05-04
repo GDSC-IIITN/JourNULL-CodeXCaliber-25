@@ -1,7 +1,7 @@
 
 import { DEV } from '@/constants/keys';
 import api from '@/lib/api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export const useDev = () => {
     // const queryClient = useQueryClient()
