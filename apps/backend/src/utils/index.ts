@@ -9,7 +9,11 @@ export class CloudFlareEmbeddingFunction {
     private model_name: string;
     private account_id: string;
 
-    constructor(api_key: string, account_id?: string, model_name?: string) {
+    constructor(
+        api_key: string, 
+        account_id?: string, // Cloudflare account ID; defaults to CF_ACCOUNT_ID environment variable if not provided
+        model_name?: string // Embedding model name; defaults to CF_EMBEDDING_MODEL environment variable or '@cf/baai/bge-m3'
+    ) {
         if (!api_key || api_key.trim() === '') {
             throw new Error('Cloudflare API key is required');
         }
