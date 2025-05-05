@@ -1,8 +1,8 @@
-import { CustomDrizzleClient } from "@/db";
+import { CustomDrizzleClient } from "@/lib/db";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { Env } from "@/types/bindings";
-import { account, session, user, verification } from "@/db/schema/auth-schema";
+import { account, session, user, verification } from "@/lib/db/schema/auth.schema";
 
 // Create a dummy DB client for the CLI to work with
 // This will only be used when running the CLI, not in production

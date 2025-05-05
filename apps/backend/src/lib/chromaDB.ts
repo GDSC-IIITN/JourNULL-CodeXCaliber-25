@@ -3,28 +3,29 @@ import { Context } from 'hono';
 
 export class CustomChromaClient {
   private chromaClientInstance: ChromaClient | null = null;
-  
-  constructor(private context: Context) {}
-  
+
+  constructor(private context: Context) { }
+
   async client(): Promise<ChromaClient> {
     // Return cached instance if available
     if (this.chromaClientInstance) {
       return this.chromaClientInstance;
     }
-    
+
     // Validate environment variables
     const username = this.context.env.CHROMA_USERNAME;
     const password = this.context.env.CHROMA_PASSWORD;
     const serverUrl = this.context.env.CHROMA_SERVER_URL;
-    
+
+
     if (!username || !password || !serverUrl) {
       throw new Error('Missing required ChromaDB environment variables');
     }
-    
+
     try {
       // Create basic auth token (fixing the 'Basic' duplication issue)
       const token = btoa(`${username}:${password}`);
-      
+
       // Create and cache the client
       this.chromaClientInstance = new ChromaClient({
         path: serverUrl,
@@ -35,7 +36,7 @@ export class CustomChromaClient {
           }
         }
       });
-      
+
       return this.chromaClientInstance;
     } catch (error) {
       console.error('Failed to initialize ChromaDB client:', error);
