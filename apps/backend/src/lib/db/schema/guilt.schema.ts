@@ -1,6 +1,6 @@
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
-import { user } from "./auth-schema";
+import { user } from "./auth.schema";
 
 
 export const guilts = sqliteTable(
