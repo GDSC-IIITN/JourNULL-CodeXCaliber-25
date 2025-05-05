@@ -18,7 +18,7 @@ export default function SignIn() {
     const [rememberMe, setRememberMe] = useState(false);
 
     return (
-        <Card className="max-w-md">
+        <Card className="w-full max-w-sm m-6">
             <CardHeader>
                 <CardTitle className="text-lg md:text-xl">Sign In</CardTitle>
                 <CardDescription className="text-xs md:text-sm">
@@ -76,7 +76,7 @@ export default function SignIn() {
 
                     <Button
                         type="submit"
-                        className="w-full"
+                        className="w-full bg-[#2323FF] text-white"
                         disabled={loading}
                         onClick={async () => {
                             await signIn.email(
@@ -87,11 +87,13 @@ export default function SignIn() {
                                 },
 
                                 {
-                                    onRequest: () => {
+                                    onRequest: (ctx) => {
                                         setLoading(true);
+                                        console.log("Request: ", ctx);
                                     },
-                                    onResponse: () => {
+                                    onResponse: (ctx) => {
                                         setLoading(false);
+                                        console.log("Response: ", ctx);
                                     },
                                 },
                             );
