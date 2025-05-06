@@ -110,7 +110,7 @@ export default function SignIn() {
 
                     <div className={cn(
                         "w-full gap-2 flex items-center",
-                        "justify-between flex-wrap"
+                        "justify-between flex-wrap "
                     )}>
 
                         <Button

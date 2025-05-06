@@ -1,12 +1,15 @@
 "use client";
 import { ModeToggle } from "@/components/theme/theme-toggle";
+import { Button } from "@/components/ui/button";
 // import { useDev } from "@/hooks/dev";
-import { useSession } from "@/lib/auth/auth-client";
+import { authClient, signOut, useSession } from "@/lib/auth/auth-client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
     // Use the useSession hook to get session data including user information
     const { data: session } = useSession();
+    const router = useRouter();
 
     // const { getHealth } = useDev()
     // console.log("Health check: ", getHealth.data)
@@ -18,7 +21,19 @@ export default function Dashboard() {
                     <h1 className="text-2xl font-bold mb-4 ">Dashboard</h1>
                     <p className="mb-4">Welcome to the dashboard!</p>
                 </div>
-                <ModeToggle />
+                <div className="flex items-center gap-4">
+                    <ModeToggle />
+                    <Button onClick={() => {
+                        signOut()
+                            .then(() => {
+                                router.push("/auth/signin"); 
+                            })
+                            .catch((error) => {
+                                console.error("Error signing out:", error);
+                            });
+
+                    }}>Logout</Button>
+                </div>
             </div>
 
             {/* Display user information */}

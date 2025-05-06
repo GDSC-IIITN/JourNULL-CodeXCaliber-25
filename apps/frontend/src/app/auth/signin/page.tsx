@@ -12,7 +12,7 @@ export default function Login() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 exit={{ opacity: 0, x: -100 }}
-                className="col-span-1 flex items-center justify-center w-full">
+                className="col-span-3 md:col-span-1 flex items-center justify-center w-full">
                 <SignIn></SignIn>
             </motion.div>
             <div className="col-span-2 relative hidden md:flex items-center justify-center">
