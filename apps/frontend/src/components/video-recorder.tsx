@@ -1,15 +1,15 @@
 "use client";
 import { useR2Uploader } from "@/hooks/r2";
 import { useCallback } from "react";
-import VideoRecorder from "react-video-recorder";
+import VideoRecorder, { RecordingCompleteData } from "react-video-recorder";
 
 export default function VideoCaptureUploader() {
     const { uploadFile, uploading, error, viewUrl, fileKey, fileType } = useR2Uploader();
 
     const handleRecordingComplete = useCallback(
-        (videoData: any) => {
+        (videoData: RecordingCompleteData) => {
             // React Video Recorder returns a blob in the videoBlob Property
-            const videoBlob = videoData.blob || videoData;
+            const videoBlob = videoData.videoBlob;
             const file = new File([videoBlob], `video_${Date.now()}.webm`, {
                 type: "video/webm",
             });

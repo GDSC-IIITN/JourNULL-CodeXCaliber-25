@@ -2,6 +2,7 @@
 "use client";
 
 import { useR2Uploader } from "@/hooks/r2";
+import Image from "next/image";
 
 
 export default function MediaUploader() {
@@ -20,7 +21,7 @@ export default function MediaUploader() {
             {viewUrl && (
                 <>
                     <p>Preview:</p>
-                    {fileType?.startsWith("image/") && <img src={viewUrl} alt="Uploaded media" />}
+                    {fileType?.startsWith("image/") && <Image src={viewUrl} alt="Uploaded media" width={500} height={500} />}
                     {fileType?.startsWith("video/") && <video src={viewUrl} controls width="500" />}
                     {fileType?.startsWith("audio/") && <audio src={viewUrl} controls />}
                     <p>File Key: {fileKey}</p>

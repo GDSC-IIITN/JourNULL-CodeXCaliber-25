@@ -37,8 +37,9 @@ export function useR2Uploader() {
             if (!readRes.ok) throw new Error(readData.error);
             setViewUrl(readData.signedUrl);
             setFileType(mimeType);
-        } catch (err: any) {
-            setError(err.message || "Something went wrong");
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : "Something went wrong";
+            setError(errorMessage);
         } finally {
             setUploading(false);
         }

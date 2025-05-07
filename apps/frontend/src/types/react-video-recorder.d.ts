@@ -2,7 +2,7 @@
 declare module 'react-video-recorder' {
     import * as React from 'react';
 
-    interface RecordingCompleteData {
+    export interface RecordingCompleteData {
         videoBlob: Blob;
         videoUrl: string;
     }
@@ -122,7 +122,7 @@ declare module 'react-video-recorder' {
          * Translation function
          * @default t
          */
-        t?: (...args: any[]) => string;
+        t?: (key: string, ...args: unknown[]) => string;
         /**
          * Called when the camera is turned on
          */

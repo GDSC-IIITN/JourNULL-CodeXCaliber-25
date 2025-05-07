@@ -14,6 +14,9 @@ export async function GET(req: NextRequest) {
         const signedUrl = await r2Service.getSignedUrlForRead(key);
         return NextResponse.json({ signedUrl });
     } catch (err) {
-        return NextResponse.json({ error: "Failed to generate read URL" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to generate read URL" }, {
+            status: 500,
+            statusText: err instanceof Error ? err.message : "Unknown error"
+        });
     }
 }

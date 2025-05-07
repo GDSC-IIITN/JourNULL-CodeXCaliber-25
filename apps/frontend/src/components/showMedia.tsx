@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export function DynamicMedia({ fileKey }: { fileKey: string }) {
@@ -40,11 +41,11 @@ export function DynamicMedia({ fileKey }: { fileKey: string }) {
                 URL.revokeObjectURL(mediaUrl);
             }
         };
-    }, [fileKey]);
+    }, [fileKey, mediaUrl]);
 
     if (!mediaUrl || !mediaType) return <p>Loading...</p>;
 
-    if (mediaType === "image") return <img src={mediaUrl} alt="uploaded media" />;
+    if (mediaType === "image") return <Image src={mediaUrl} alt="uploaded media" width={500} height={500} />;
     if (mediaType === "video") return <video src={mediaUrl} controls width="500" />;
     if (mediaType === "audio") return <audio src={mediaUrl} controls />;
 

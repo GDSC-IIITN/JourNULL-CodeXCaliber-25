@@ -6,6 +6,6 @@ export default function Home() {
   const redirect = useRouter()
   useEffect(() => {
     redirect.push("/auth/signin");
-  }, []);
+  }, [redirect]);
   return null;
 }
