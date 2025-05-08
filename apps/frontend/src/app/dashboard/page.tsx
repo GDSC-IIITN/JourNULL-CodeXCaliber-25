@@ -1,6 +1,9 @@
 "use client";
+import ImageUploader from "@/components/media-uploader";
+import { DynamicMedia } from "@/components/showMedia";
 import { ModeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
+import VideoCaptureUploader from "@/components/video-recorder";
 // import { useDev } from "@/hooks/dev";
 import { authClient, signOut, useSession } from "@/lib/auth/auth-client";
 import Image from "next/image";
@@ -26,12 +29,25 @@ export default function Dashboard() {
                     <Button onClick={() => {
                         signOut()
                             .then(() => {
-                                router.push("/auth/signin"); 
+                                router.push("/auth/signin");
                             })
                             .catch((error) => {
                                 console.error("Error signing out:", error);
                             });
 
+                    }}>Logout</Button>
+                </div>
+                <div className="flex items-center gap-4">
+                    <ModeToggle />
+                    <Button onClick={() => {
+                        signOut()
+                            .then(() => {
+                                router.push("/auth/signin");
+                            })
+                            .catch((error) => {
+                                console.error("Error signing out:", error);
+                                router.push("/auth/signin");
+                            });
                     }}>Logout</Button>
                 </div>
             </div>
@@ -58,13 +74,19 @@ export default function Dashboard() {
                 </div>
             )}
 
-            {/* Debug information - you can remove this in production */}
             <div className="mt-8 p-4 bg-muted rounded-lg">
                 <h3 className="text-lg font-medium mb-2">Session Debug Info</h3>
                 <pre className="text-xs overflow-auto p-2 bg-background rounded">
                     {JSON.stringify(session, null, 2)}
                 </pre>
             </div>
+
+            <ImageUploader />
+            <DynamicMedia fileKey="1746708462961_Screen Recording 2023-10-31 at 8.58.49 PM.mov" />
+
+            <VideoCaptureUploader
+
+            />
         </div>
     );
 }

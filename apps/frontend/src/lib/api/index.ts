@@ -35,7 +35,9 @@ class ApiSdk {
                         authClient.signOut()
                         return redirect('/auth/login')
                     }
+                    return Promise.reject(error)
                 }
+                return Promise.reject(error)
             }
         )
         return ax;
