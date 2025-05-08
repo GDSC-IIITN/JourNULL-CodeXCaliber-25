@@ -5,7 +5,7 @@ import { ModeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 import VideoCaptureUploader from "@/components/video-recorder";
 // import { useDev } from "@/hooks/dev";
-import { authClient, signOut, useSession } from "@/lib/auth/auth-client";
+import { signOut, useSession } from "@/lib/auth/auth-client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 

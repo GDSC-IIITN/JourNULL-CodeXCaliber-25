@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { AnimatedText } from "@/components/animated-text";
 import SignIn from "@/components/auth/sign-in";
+import Image from "next/image";
 
 
 export default function Login() {
@@ -16,9 +17,8 @@ export default function Login() {
                 <SignIn></SignIn>
             </motion.div>
             <div className="col-span-2 relative hidden md:flex items-center justify-center">
-                <img width={'full'} className="h-screen blur" src="/edi.png">
-
-                </img>
+                <Image width={1920} height={1080} alt="edi" className="w-full h-screen blur" src="/edi.png">
+                </Image>
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                     <AnimatedText />
                 </div>
