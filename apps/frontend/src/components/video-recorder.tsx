@@ -24,8 +24,9 @@ export default function VideoCaptureUploader() {
                 <VideoRecorder
                     onRecordingComplete={handleRecordingComplete}
                     isOnInitially={false}
-                    videoClassName="w-full h-full object-cover"
+                    videoClassName="w-full h-full object-cover bg-black"
                     wrapperClassName="w-full h-full"
+                    cameraViewClassName="w-full h-full bg-black"
                 />
             </div>
             {uploading && <p>Uploading...</p>}
