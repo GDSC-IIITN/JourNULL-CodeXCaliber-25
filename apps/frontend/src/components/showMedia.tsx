@@ -6,6 +6,7 @@ export function DynamicMedia({ fileKey }: { fileKey: string }) {
     const [mediaUrl, setMediaUrl] = useState<string | null>(null);
     const [mediaType, setMediaType] = useState<"image" | "video" | "audio" | null>(null);
     const [progress, setProgress] = useState(0);
+    const [objectUrl, setObjectUrl] = useState<string | null>(null);
 
     useEffect(() => {
         async function loadMedia() {
@@ -28,10 +29,13 @@ export function DynamicMedia({ fileKey }: { fileKey: string }) {
                     setMediaType("audio");
                 }
 
-                const objectUrl = URL.createObjectURL(res.data);
-                setMediaUrl(objectUrl);
+                const newObjectUrl = URL.createObjectURL(res.data);
+                setObjectUrl(newObjectUrl);
+                setMediaUrl(newObjectUrl);
             } catch (error) {
                 console.error("Error loading media:", error);
+                setMediaUrl(null);
+                setMediaType(null);
             }
         }
 

@@ -33,8 +33,8 @@ export default function Dashboard() {
                             })
                             .catch((error) => {
                                 console.error("Error signing out:", error);
+                                router.push("/auth/signin");
                             });
-
                     }}>Logout</Button>
                 </div>
             </div>
@@ -61,7 +61,6 @@ export default function Dashboard() {
                 </div>
             )}
 
-            {/* Debug information - you can remove this in production */}
             <div className="mt-8 p-4 bg-muted rounded-lg">
                 <h3 className="text-lg font-medium mb-2">Session Debug Info</h3>
                 <pre className="text-xs overflow-auto p-2 bg-background rounded">
@@ -70,7 +69,7 @@ export default function Dashboard() {
             </div>
 
             <ImageUploader />
-            <DynamicMedia fileKey="1746602845625_Text to Video Runway (2).mp4" />
+            <DynamicMedia fileKey="1746708462961_Screen Recording 2023-10-31 at 8.58.49 PM.mov" />
 
             <VideoCaptureUploader
 
