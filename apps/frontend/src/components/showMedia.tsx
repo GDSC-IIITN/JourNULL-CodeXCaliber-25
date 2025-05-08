@@ -39,8 +39,8 @@ export function DynamicMedia({ fileKey }: { fileKey: string }) {
 
         // Clean up
         return () => {
-            if (mediaUrl) {
-                URL.revokeObjectURL(mediaUrl);
+            if (objectUrl) {
+                URL.revokeObjectURL(objectUrl);
             }
         };
     }, [fileKey]);
