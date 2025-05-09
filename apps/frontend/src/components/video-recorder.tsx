@@ -9,7 +9,7 @@ export default function VideoCaptureUploader() {
     const handleRecordingComplete = useCallback(
         (videoData: RecordingCompleteData) => {
             // React Video Recorder returns a blob in the videoBlob Property
-            const videoBlob = videoData.videoBlob;
+            const videoBlob = videoData;
             const file = new File([videoBlob], `video_${Date.now()}.webm`, {
                 type: "video/webm",
             });
@@ -24,7 +24,7 @@ export default function VideoCaptureUploader() {
                 <VideoRecorder
                     onRecordingComplete={handleRecordingComplete}
                     isOnInitially={false}
-                    videoClassName="w-full h-full object-cover bg-black"
+                    videoClassName="w-full h-full object-cover"
                     wrapperClassName="w-full h-full"
                     cameraViewClassName="w-full h-full bg-black"
                 />

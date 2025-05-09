@@ -19,6 +19,10 @@ export function DynamicMedia({ fileKey }: { fileKey: string }) {
                     },
                 });
 
+                if (res.status !== 200) {
+                    throw new Error("Failed to load media");
+                }
+
                 const contentType = res.headers['content-type'] ?? "";
 
                 if (contentType.startsWith("image/")) {

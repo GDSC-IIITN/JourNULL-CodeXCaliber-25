@@ -2,9 +2,9 @@
 declare module 'react-video-recorder' {
     import * as React from 'react';
 
-    export interface RecordingCompleteData {
-        videoBlob: Blob;
-        videoUrl: string;
+    export interface RecordingCompleteData extends Blob {
+        size: number;
+        type: string;
     }
 
     interface VideoRecorderProps {
