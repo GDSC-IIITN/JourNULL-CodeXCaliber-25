@@ -33,19 +33,6 @@ export default function Dashboard() {
                             })
                             .catch((error) => {
                                 console.error("Error signing out:", error);
-                            });
-
-                    }}>Logout</Button>
-                </div>
-                <div className="flex items-center gap-4">
-                    <ModeToggle />
-                    <Button onClick={() => {
-                        signOut()
-                            .then(() => {
-                                router.push("/auth/signin");
-                            })
-                            .catch((error) => {
-                                console.error("Error signing out:", error);
                                 router.push("/auth/signin");
                             });
                     }}>Logout</Button>
@@ -83,10 +70,7 @@ export default function Dashboard() {
 
             <ImageUploader />
             <DynamicMedia fileKey="1746708462961_Screen Recording 2023-10-31 at 8.58.49 PM.mov" />
-
-            <VideoCaptureUploader
-
-            />
+            <VideoCaptureUploader />
         </div>
     );
-}
+} 
