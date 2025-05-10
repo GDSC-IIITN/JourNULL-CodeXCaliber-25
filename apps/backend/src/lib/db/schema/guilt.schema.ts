@@ -12,7 +12,7 @@ export const guilts = sqliteTable(
     dumpTime: integer("dump_time", { mode: "timestamp" })
       .notNull()
       .defaultNow(),
-    userId: integer("user_id")
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
   },

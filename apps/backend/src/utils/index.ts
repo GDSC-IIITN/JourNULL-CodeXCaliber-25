@@ -3,6 +3,9 @@ import axios from "axios";
 
 import { Context } from "hono";
 import { CloudflareEmbeddingResponse } from "@/types/utils";
+import { journals } from "@/lib/db/schema";
+import { CustomDrizzleClient } from "@/lib/db";
+import { inArray } from "drizzle-orm";
 
 export class CloudFlareEmbeddingFunction {
     private api_key: string;
@@ -10,7 +13,7 @@ export class CloudFlareEmbeddingFunction {
     private account_id: string;
 
     constructor(
-        api_key: string, 
+        api_key: string,
         account_id?: string, // Cloudflare account ID; defaults to CF_ACCOUNT_ID environment variable if not provided
         model_name?: string // Embedding model name; defaults to CF_EMBEDDING_MODEL environment variable or '@cf/baai/bge-m3'
     ) {
@@ -106,12 +109,20 @@ export const getRelevantEntries = async (current_entry: string, ctx: Context) =>
             ctx.env.CF_EMBEDDING_MODEL
         );
         const embedding = await embeddingFunction.generate([current_entry]);
+
         const queryResult = await collection.query({
             queryEmbeddings: embedding,
             nResults: 5,
         });
 
-        return queryResult;
+        const drizzelClient = new CustomDrizzleClient({
+            url: ctx.env.DATABASE_URL,
+            authToken: ctx.env.DATABASE_AUTH_TOKEN
+        })
+        const db = await drizzelClient.client()
+        const previousEntries = await db.select().from(journals).where(inArray(journals.id, queryResult.ids[0].map(id => id.toString())))
+
+        return previousEntries
     } catch (error) {
         console.error('Error getting relevant entries:', error);
         throw new Error('Failed to get relevant entries');

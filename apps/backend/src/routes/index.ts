@@ -1,11 +1,16 @@
 import { Context, Hono } from "hono";
 import DevRoute from "@/routes/dev.route";
 import { authRoute } from "@/routes/auth.route";
+import journalRoute from "@/routes/journal.route";
+import aiRoute from "@/routes/ai.route";
+
 
 export const routes = () => {
 	const app = new Hono();
 	app.route('/', DevRoute);
 	app.route('/auth', authRoute());
+	app.route('/journal', journalRoute);
+	app.route('/ai', aiRoute);
 
 	return app;
 };
