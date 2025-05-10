@@ -15,6 +15,7 @@ export type Env = {
   MICROSOFT_TENANT_ID: string;
   GITHUB_CLIENT_ID: string;
   GITHUB_CLIENT_SECRET: string;
+  GROQ_API_KEY: string;
 }
 
 // export type Variables = {

@@ -7,11 +7,11 @@ import { user } from "./auth.schema";
 export const journals = sqliteTable(
   "journals",
   {
-    id: integer("id").primaryKey({ autoIncrement: true }),
+    id: text("id").primaryKey(),
     title: text("title"),
     content: text("content"),
     category: text("category").notNull().$type<"journal" | "dreamJournal">(),
-    userId: integer("user_id")
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
   },

@@ -5,11 +5,11 @@ import { user } from "./auth.schema";
 export const timeCapsules = sqliteTable(
   "time_capsules",
   {
-    id: integer("id").primaryKey({ autoIncrement: true }),
+    id: text("id").primaryKey(),
     title: text("title").notNull(),
     content: text("content").notNull(),
     unlockTime: integer("unlock_time", { mode: "timestamp" }).notNull(),
-    userId: integer("user_id")
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
   },

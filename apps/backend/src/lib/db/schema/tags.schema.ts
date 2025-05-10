@@ -19,7 +19,7 @@ export const tags = sqliteTable(
 export const journalTags = sqliteTable(
   "journal_tags",
   {
-    journalId: integer("journal_id")
+    journalId: text("journal_id")
       .notNull()
       .references(() => journals.id, { onDelete: "cascade" }),
     tagName: text("tag_name")
