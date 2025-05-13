@@ -3,7 +3,7 @@
 import { useAiSuggestions, useJournalAnalysis } from "@/hooks/ai";
 import { useState } from "react";
 
-interface Suggestion {
+export interface Suggestion {
     activity: string;
     reason: string;
     suggestionReason: string;

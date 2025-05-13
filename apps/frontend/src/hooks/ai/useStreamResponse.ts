@@ -16,17 +16,18 @@ export function useStreamResponse<T = string>(options: UseStreamResponseOptions 
             setIsStreaming(true);
             setStreamedText('');
 
-            await handleStreamResponse(stream, (text) => {
+            await handleStreamResponse(stream, (data: Record<string, unknown>) => {
+                const text = data.toString();
                 if (options.isJson) {
                     try {
                         const jsonData = JSON.parse(text) as T;
                         setStreamedText(jsonData);
                     } catch (e) {
-                        // If parsing fails, keep the raw text
-                        setStreamedText(text);
+                        setStreamedText(text as T);
+                        console.error('Error parsing JSON:', (e as Error).message);
                     }
                 } else {
-                    setStreamedText(text);
+                    setStreamedText(text as T);
                 }
             });
         } catch (error) {

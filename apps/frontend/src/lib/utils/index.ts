@@ -10,13 +10,13 @@ export function cn(...inputs: ClassValue[]) {
  * @param text The text to format
  * @returns Formatted text with HTML tags
  */
-function formatText(text: string): string {
-  return text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold text
-    .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italic text
-    .replace(/\`(.*?)\`/g, '<code>$1</code>') // Code blocks
-    .replace(/\~\~(.*?)\~\~/g, '<del>$1</del>'); // Strikethrough
-}
+// function formatText(text: string): string {
+//   return text
+//     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold text
+//     .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italic text
+//     .replace(/\`(.*?)\`/g, '<code>$1</code>') // Code blocks
+//     .replace(/\~\~(.*?)\~\~/g, '<del>$1</del>'); // Strikethrough
+// }
 
 /**
  * Utility function to handle streaming responses from the API
@@ -26,7 +26,7 @@ function formatText(text: string): string {
  */
 export async function handleStreamResponse(
   stream: ReadableStream<Uint8Array>,
-  onChunk: (data: any) => void
+  onChunk: (data: Record<string, unknown>) => void
 ): Promise<void> {
   const reader = stream.getReader();
   let jsonBuffer = "";
@@ -67,6 +67,7 @@ export async function handleStreamResponse(
           } catch (e) {
             // If parsing fails, it might be incomplete JSON
             // Keep accumulating in the buffer
+            console.error('Error parsing JSON:', (e as Error).message);
             continue;
           }
 
