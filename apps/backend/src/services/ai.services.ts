@@ -57,7 +57,6 @@ export class AIService {
     }) {
         const ai = new AI(ctx, 'groq')
         const previousEntries = await getRelevantEntries(journal, ctx)
-        console.log(previousEntries)
 
         const prompt = `
         You are a helpful assistant that analyses journal entries.
