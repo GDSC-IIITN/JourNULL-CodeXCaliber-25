@@ -70,10 +70,7 @@ export default function Dashboard() {
 
             <ImageUploader />
             <DynamicMedia fileKey="1746708462961_Screen Recording 2023-10-31 at 8.58.49 PM.mov" />
-
-            <VideoCaptureUploader
-
-            />
+            <VideoCaptureUploader />
         </div>
     );
-}
+} 
