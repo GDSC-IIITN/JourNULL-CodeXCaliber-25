@@ -18,6 +18,15 @@ const app = new Hono<{
 
 }>({ strict: false });
 
+app.use('*', cors({
+    origin: ['http://localhost:3000'],
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization'],
+    exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
+    maxAge: 600,
+    credentials: true,
+}));
+
 app.use(prettyJSON());
 app.use(poweredBy());
 app.use(logger());

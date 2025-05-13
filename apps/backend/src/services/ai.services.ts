@@ -15,7 +15,33 @@ export class AIService {
         The journal entry is as follows:
         ${journal}
 
-        Please suggest 3 activities that the user can do based on the journal entry.
+        Please suggest only 1 activity that the user can do based on the journal entry.
+        Keep it short and concise.
+        The activity should be something that the user can do in the next 24 hours.
+        The activity should be something that is not too difficult to do.
+        The activity should be something that is not too expensive to do.
+        The activity should be something that is not too time consuming to do.
+        The activity should be something that is not too difficult to do.
+        The activity should be something that is not too expensive to do.
+        The activity should be something that is not too time consuming to do.
+        the format should be:
+        Activity: [activity]
+        Reason: [reason]
+        suggestionReason: [suggestionReason]
+        Example:
+        Activity: Go for a walk
+        Reason: It's a nice day and a walk will help the user stay fit.
+        suggestionReason: The user is feeling lazy and a walk will help them stay fit. (based on the journal entry)
+        always use JSON format with the keys Activity, Reason, suggestionReason.
+        and nothing else and not any pretext too.
+        and the response should be in JSON format.
+        and the response should be in the following format:
+        {
+            "activity": "Go for a walk",
+            "reason": "It's a nice day and a walk will help the user stay fit.",
+            "suggestionReason": "The user is feeling lazy and a walk will help them stay fit. (based on the journal entry)"
+        }
+        complete json response and nothing else.
         `
         return ai.streamText({
             prompt
