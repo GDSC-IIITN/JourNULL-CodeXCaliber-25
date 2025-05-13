@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "buildCommand": "cd ../.. && pnpm build",
+    "outputDirectory": ".next",
+    "framework": "nextjs",
+    "git": {
+        "deploymentEnabled": {
+            "dev": true
+        }
+    },
+    "env": {
+        "NODE_ENV": "development"
+    }
+}

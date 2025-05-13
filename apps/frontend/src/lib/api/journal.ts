@@ -1,13 +1,10 @@
 import { Axios } from "axios";
 import {
     CreateJournalInput,
-    UpdateJournalInput,
-    JournalIdInput,
-    createJournalSchema,
+    UpdateJournalInput, createJournalSchema,
     updateJournalSchema,
     journalIdSchema,
-    JournalResponse,
-    Journal
+    JournalResponse
 } from "../validation/journal.schema";
 
 export class JournalAPI {
