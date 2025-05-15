@@ -148,6 +148,15 @@ export async function handleJsonStreamResponse<T>(
             }
           } catch (e) {
             // If parsing fails, keep accumulating
+            console.error('Error parsing JSON buffer:', {
+              error: (e as Error).message,
+              buffer: buffer,
+              unescapedBuffer: buffer
+                .replace(/\\n/g, '')
+                .replace(/\\"/g, '"')
+                .replace(/^"|"$/g, '')
+                .trim()
+            });
             continue;
           }
         }
