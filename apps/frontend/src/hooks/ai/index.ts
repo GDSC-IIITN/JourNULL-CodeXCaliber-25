@@ -1,57 +1,34 @@
 import { useMutation } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { useStreamResponse } from '@/hooks/ai/useStreamResponse';
+import { AiEndpoint, AiSuggestionsResponse } from '@/types/ai';
 
-interface Suggestion {
-    activity: string;
-    reason: string;
-    suggestionReason: string;
-}
-
-export function useJournalAnalysis() {
-    const { streamedText, isStreaming, processStream } = useStreamResponse();
+export function useAi<T = string>(endpoint: AiEndpoint, options: { isJson?: boolean } = {}) {
+    const { streamedText, isStreaming, processStream } = useStreamResponse<T>({ isJson: options.isJson });
 
     const mutation = useMutation({
-        mutationFn: async (journalContent: string) => {
-            const stream = await api.ai.analyzeJournal({ journal: journalContent });
+        mutationFn: async (input: string) => {
+            const stream = await api.ai[endpoint]({ journal: input });
             await processStream(stream);
         },
         onError: (error: Error) => {
-            console.error('Error analyzing journal:', error)
-        },
-        onSuccess: () => {
-            console.log('Journal analysis successful')
+            console.error(`Error in ${endpoint}:`, error);
         }
     });
 
     return {
-        analyzeJournal: mutation.mutate,
-        isAnalyzing: isStreaming || mutation.isPending,
-        streamedText,
-        error: mutation.error
+        data: streamedText as T,
+        isLoading: isStreaming || mutation.isPending,
+        error: mutation.error,
+        trigger: mutation.mutate
     };
+}
+
+
+export function useJournalAnalysis() {
+    return useAi(AiEndpoint.ANALYZE_JOURNAL);
 }
 
 export function useAiSuggestions() {
-    const { streamedText, isStreaming, processStream } = useStreamResponse<Suggestion>({ isJson: true });
-
-    const mutation = useMutation({
-        mutationFn: async (journalContent: string) => {
-            const stream = await api.ai.aiSuggestions({ journal: journalContent });
-            await processStream(stream);
-        },
-        onError: (error: Error) => {
-            console.error('Error generating suggestions:', error);
-        },
-        onSuccess: () => {
-            console.log('Suggestions generated successfully')
-        }
-    });
-
-    return {
-        aiSuggestions: mutation.mutate,
-        isAiSuggestions: isStreaming || mutation.isPending,
-        streamedText,
-        error: mutation.error
-    };
+    return useAi<AiSuggestionsResponse>(AiEndpoint.AI_SUGGESTIONS, { isJson: true });
 }

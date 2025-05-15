@@ -7,10 +7,17 @@ export async function GET(
 ) {
     try {
         const { fileKey } = await context.params;
-
         const r2Service = new CloudflareR2Service();
-        const signedUrl = await r2Service.getSignedUrlForRead(fileKey);
-        const res = await fetch(signedUrl);
+
+        // First attempt with initial signed URL
+        let signedUrl = await r2Service.getSignedUrlForRead(fileKey);
+        let res = await fetch(signedUrl);
+
+        // If the first attempt fails, try one more time with a fresh signed URL
+        if (!res.ok) {
+            signedUrl = await r2Service.getSignedUrlForRead(fileKey);
+            res = await fetch(signedUrl);
+        }
 
         if (!res.ok) {
             return new Response("Failed to fetch R2 object", { status: res.status });
