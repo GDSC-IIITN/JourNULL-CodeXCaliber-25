@@ -27,6 +27,8 @@ export const Video = Node.create({
 
     group: "block",
 
+    draggable: true,
+
     addAttributes() {
         return {
             src: {
@@ -49,14 +51,19 @@ export const Video = Node.create({
     renderHTML({ HTMLAttributes }) {
         return [
             'video',
-            { controls: 'true', style: 'width: 100%', ...HTMLAttributes },
+            {
+                controls: 'true',
+                style: 'width: 100%',
+                draggable: 'true',
+                ...HTMLAttributes
+            },
             ['source', HTMLAttributes]
         ]
     },
 
     addCommands() {
         return {
-            setVideo: (src: string) => ({ commands }) => commands.insertContent(`<video controls="true" style="width: 100%" src="${src}" />`),
+            setVideo: (src: string) => ({ commands }) => commands.insertContent(`<video controls="true" style="width: 100%" draggable="true" src="${src}" />`),
 
             toggleVideo: () => ({ commands }) => commands.toggleNode(this.name, 'paragraph'),
         };
@@ -69,7 +76,6 @@ export const Video = Node.create({
                 type: this.type,
                 getAttributes: (match) => {
                     const [, , src] = match
-
                     return { src }
                 },
             })
@@ -83,13 +89,51 @@ export const Video = Node.create({
 
                 props: {
                     handleDOMEvents: {
-                        drop(view, event) {
+                        dragstart: (view, event) => {
+                            const { state } = view
+                            const { selection } = state
+                            const { empty } = selection
+
+                            if (empty) return false
+
+                            const node = state.doc.nodeAt(selection.from)
+                            if (!node || node.type.name !== 'video') return false
+
+                            event.dataTransfer?.setData('text/plain', '')
+                            event.dataTransfer?.setData('application/json', JSON.stringify({
+                                type: 'video',
+                                src: node.attrs.src
+                            }))
+
+                            return true
+                        },
+                        drop: (view, event) => {
                             const { state: { schema, tr }, dispatch } = view
                             const hasFiles = event.dataTransfer &&
                                 event.dataTransfer.files &&
                                 event.dataTransfer.files.length
 
-                            if (!hasFiles) return false
+                            if (!hasFiles) {
+                                try {
+                                    const data = event.dataTransfer?.getData('application/json')
+                                    if (!data) return false
+
+                                    const { type, src } = JSON.parse(data)
+                                    if (type !== 'video') return false
+
+                                    const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
+                                    if (!coordinates) return false
+
+                                    const node = schema.nodes.video.create({ src })
+                                    const transaction = tr.insert(coordinates.pos, node)
+                                    dispatch(transaction)
+
+                                    return true
+                                } catch (error) {
+                                    console.error('Error handling video drop:', error)
+                                    return false
+                                }
+                            }
 
                             const videos = Array
                                 .from(event.dataTransfer.files)
@@ -109,7 +153,6 @@ export const Video = Node.create({
 
                                     if (coordinates && typeof coordinates.pos === 'number') {
                                         const transaction = tr.insert(coordinates?.pos, node)
-
                                         dispatch(transaction)
                                     }
                                 }
@@ -124,5 +167,4 @@ export const Video = Node.create({
             })
         ]
     }
-
 })
