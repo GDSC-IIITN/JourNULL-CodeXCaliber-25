@@ -52,6 +52,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
+    "react-markdown": "^10.1.0",
     "react-video-recorder": "^3.19.4",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.2.0",
@@ -69,6 +70,7 @@
     "eslint-config-next": "15.2.4",
     "sass": "^1.88.0",
     "tailwindcss": "^4",
+    "tailwindcss-animate": "^1.0.7",
     "tw-animate-css": "^1.2.9",
     "typescript": "^5"
   }
