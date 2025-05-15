@@ -67,7 +67,7 @@ export class AIService {
         ${previousEntries.map(entry => `${entry.title}\n${entry.content}`).join('\n')}
 
         Please analyse the journal entry and provide a summary of the day.
-        the reponse should be in markdown format only.
+        the response should be in markdown format only.
         there should be a title for the summary.
         the title should be in bold and heading 1.
         use typography to make the summary more readable.
