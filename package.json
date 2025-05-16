@@ -12,7 +12,10 @@
     "db:studio": "cd apps/backend && bun db:studio"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
     "prettier": "^3.5.3",
+    "tailwindcss": "^4.1.7",
     "turbo": "^2.5.0",
     "typescript": "5.8.2"
   },
