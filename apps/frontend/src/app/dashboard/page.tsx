@@ -69,12 +69,12 @@ export default function Dashboard() {
             </div>
 
             <ImageUploader />
-            <DynamicMedia fileKey="1746708462961_Screen Recording 2023-10-31 at 8.58.49 PM.mov" />
-            <VideoCaptureUploader
+            <DynamicMedia fileKey="1747235741899_Screen Recording 2023-10-31 at 8.58.49 PM.mov" />
+            {/* <VideoCaptureUploader
                 onClose={() => {
                     console.log('closed')
                 }}
-            />
+            /> */}
         </div>
     );
 } 

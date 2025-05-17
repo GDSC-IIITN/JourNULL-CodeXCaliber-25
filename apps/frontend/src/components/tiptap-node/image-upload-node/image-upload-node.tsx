@@ -267,6 +267,82 @@ const ImageUploadPreview: React.FC<ImageUploadPreviewProps> = ({
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`
   }
 
+  const getStatusText = () => {
+    switch (status) {
+      case "uploading":
+        return "Uploading...";
+      case "success":
+        return "Upload complete";
+      case "error":
+        return "Upload failed";
+      default:
+        return "";
+    }
+  }
+
+  const getStatusIcon = () => {
+    switch (status) {
+      case "uploading":
+        return (
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="tiptap-image-upload-status-icon"
+          >
+            <path
+              d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4Z"
+              fill="currentColor"
+              fillOpacity="0.2"
+            />
+            <path
+              d="M12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              className="tiptap-image-upload-status-icon-spinner"
+            />
+          </svg>
+        );
+      case "success":
+        return (
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="tiptap-image-upload-status-icon success"
+          >
+            <path
+              d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM10 15.5858L6.70711 12.2929C6.31658 11.9024 5.68342 11.9024 5.29289 12.2929C4.90237 12.6834 4.90237 13.3166 5.29289 13.7071L9.29289 17.7071C9.68342 18.0976 10.3166 18.0976 10.7071 17.7071L18.7071 9.70711C19.0976 9.31658 19.0976 8.68342 18.7071 8.29289C18.3166 7.90237 17.6834 7.90237 17.2929 8.29289L10 15.5858Z"
+              fill="currentColor"
+            />
+          </svg>
+        );
+      case "error":
+        return (
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="tiptap-image-upload-status-icon error"
+          >
+            <path
+              d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM13 15C13 15.5523 12.5523 16 12 16C11.4477 16 11 15.5523 11 15V9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9V15ZM13 19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19C11 18.4477 11.4477 18 12 18C12.5523 18 13 18.4477 13 19Z"
+              fill="currentColor"
+            />
+          </svg>
+        );
+      default:
+        return null;
+    }
+  }
+
   return (
     <div className="tiptap-image-upload-preview">
       {status === "uploading" && (
@@ -289,11 +365,17 @@ const ImageUploadPreview: React.FC<ImageUploadPreviewProps> = ({
           </div>
         </div>
         <div className="tiptap-image-upload-actions">
-          {status === "uploading" && (
-            <span className="tiptap-image-upload-progress-text">
-              {progress}%
-            </span>
-          )}
+          <div className="tiptap-image-upload-progress-info">
+            {getStatusIcon()}
+            <div className="tiptap-image-upload-status">
+              <span className="tiptap-image-upload-progress-text">
+                {status === "uploading" ? `${progress}%` : ""}
+              </span>
+              <span className={`tiptap-image-upload-status-text ${status}`}>
+                {getStatusText()}
+              </span>
+            </div>
+          </div>
           <button
             className="tiptap-image-upload-close-btn"
             onClick={(e) => {

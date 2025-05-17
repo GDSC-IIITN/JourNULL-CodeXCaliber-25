@@ -1,9 +1,17 @@
 "use client"
+import { ModeToggle } from "@/components/theme/theme-toggle"
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
+import { ChevronLeft } from "lucide-react"
+
 import { useState } from "react"
 
 export default function Page() {
   const [content, setContent] = useState<string>("")
 
-  return <SimpleEditor content={content} setContent={setContent} />
+  return <div>
+    <div className="flex justify-end">
+      <ModeToggle />
+    </div>
+    <SimpleEditor content={content} setContent={setContent} />
+  </div>
 }
