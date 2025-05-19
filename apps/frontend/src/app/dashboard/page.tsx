@@ -3,19 +3,17 @@ import ImageUploader from "@/components/media-uploader";
 import { DynamicMedia } from "@/components/showMedia";
 import { ModeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import VideoCaptureUploader from "@/components/video-recorder";
-// import { useDev } from "@/hooks/dev";
+import { useIntegrations } from "@/hooks/integrations";
 import { signOut, useSession } from "@/lib/auth/auth-client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
-    // Use the useSession hook to get session data including user information
     const { data: session } = useSession();
     const router = useRouter();
-
-    // const { getHealth } = useDev()
-    // console.log("Health check: ", getHealth.data)
+    const { getGoogleCalendarEvents, getGooglePhotosEvents } = useIntegrations()
 
     return (
         <div className="p-6">
@@ -61,16 +59,32 @@ export default function Dashboard() {
                 </div>
             )}
 
-            <div className="mt-8 p-4 bg-muted rounded-lg">
+            <Card className="mt-8 p-4 bg-muted rounded-lg">
                 <h3 className="text-lg font-medium mb-2">Session Debug Info</h3>
                 <pre className="text-xs overflow-auto p-2 bg-background rounded">
                     {JSON.stringify(session, null, 2)}
                 </pre>
-            </div>
+            </Card>
 
             <ImageUploader />
             <DynamicMedia fileKey="1747293854076_Screen Recording 2023-10-31 at 8.58.49 PM.mov" />
             <VideoCaptureUploader />
+            {
+                getGoogleCalendarEvents.data && (
+                    <Card className="mt-8 p-4 bg-muted rounded-lg">
+                        <h3 className="text-lg font-medium mb-2">Google Calendar Events</h3>
+                        <pre className="text-xs overflow-auto p-2 bg-background rounded">{JSON.stringify(getGoogleCalendarEvents.data, null, 2)}</pre>
+                    </Card>
+                )
+            }
+            {
+                getGooglePhotosEvents.data && (
+                    <Card className="mt-8 p-4 bg-muted rounded-lg">
+                        <h3 className="text-lg font-medium mb-2">Google Photos Events</h3>
+                        <pre className="text-xs overflow-auto p-2 bg-background rounded">{JSON.stringify(getGooglePhotosEvents.data, null, 2)}</pre>
+                    </Card>
+                )
+            }
         </div>
     );
 } 

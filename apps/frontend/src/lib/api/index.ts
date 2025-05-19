@@ -5,19 +5,21 @@ import { authClient } from '../auth/auth-client';
 import { redirect } from 'next/navigation';
 import { JournalAPI } from './journal';
 import { AiAPI } from './ai';
-
+import { IntegrationsAPI } from './integratons';
 class ApiSdk {
     private readonly mainInstance: Axios;
 
     dev: DevAPI;
     journal: JournalAPI;
     ai: AiAPI;
+    integrations: IntegrationsAPI;
 
     constructor() {
         this.mainInstance = this.createAxios(env.NEXT_PUBLIC_API_URL);
         this.dev = new DevAPI(this.mainInstance)
         this.journal = new JournalAPI(this.mainInstance)
         this.ai = new AiAPI(this.mainInstance)
+        this.integrations = new IntegrationsAPI(this.mainInstance)
     }
 
     private createAxios(baseURL: string): Axios {

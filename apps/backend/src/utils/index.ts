@@ -3,9 +3,11 @@ import axios from "axios";
 
 import { Context } from "hono";
 import { CloudflareEmbeddingResponse } from "@/types/utils";
-import { journals } from "@/lib/db/schema";
+import { account, journals } from "@/lib/db/schema";
 import { CustomDrizzleClient } from "@/lib/db";
 import { inArray } from "drizzle-orm";
+import { createAuth } from "@/lib/auth";
+import { eq } from "drizzle-orm";
 
 export class CloudFlareEmbeddingFunction {
     private api_key: string;
@@ -127,4 +129,41 @@ export const getRelevantEntries = async (current_entry: string, ctx: Context) =>
         console.error('Error getting relevant entries:', error);
         throw new Error('Failed to get relevant entries');
     }
+}
+
+export const getProviderAccessToken = async (ctx: Context, provider: string) => {
+    const auth = await createAuth(ctx.env)
+    const headers = ctx.req.header()
+
+
+    const ac = await auth.api.getAccessToken({
+        body: {
+            providerId: provider,
+            userId: ctx.get('user')?.id
+        },
+        headers
+    })
+
+
+
+
+    const drizzelClient = new CustomDrizzleClient({
+        url: ctx.env.DATABASE_URL,
+        authToken: ctx.env.DATABASE_AUTH_TOKEN
+    })
+    const db = await drizzelClient.client()
+    const accounts = await auth.api.listUserAccounts({
+        headers
+    })
+    const providerAccount = accounts.find(acc => acc.provider === provider)
+    if (!providerAccount) {
+        throw new Error('Provider account not found')
+    }
+    const account_id = await db.query.account.findFirst({
+        where: eq(account.accountId, providerAccount?.accountId || ''),
+    })
+    if (!account_id) {
+        throw new Error('Account not found')
+    }
+    return account_id?.accessToken
 }
