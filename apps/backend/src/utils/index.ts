@@ -147,11 +147,11 @@ export const getProviderAccessToken = async (ctx: Context, provider: string) => 
 
 
 
-    const drizzelClient = new CustomDrizzleClient({
+    const drizzleClient = new CustomDrizzleClient({
         url: ctx.env.DATABASE_URL,
         authToken: ctx.env.DATABASE_AUTH_TOKEN
     })
-    const db = await drizzelClient.client()
+    const db = await drizzleClient.client()
     const accounts = await auth.api.listUserAccounts({
         headers
     })
