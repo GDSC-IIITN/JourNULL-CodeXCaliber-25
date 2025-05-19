@@ -12,24 +12,24 @@ export default function RecentsPage() {
 
 
     const transformedGooglePhotosEvents = googlePhotosEvents?.mediaItems.map((event, index) => {
-        // Predefined positions for better spread
-        const positions = [
-            { top: 10, left: 20, rotate: -5 },
-            { top: 40, left: 25, rotate: -7 },
-            { top: 5, left: 40, rotate: 8 },
-            { top: 32, left: 55, rotate: 10 },
-            { top: 20, right: 35, rotate: 2 },
-            { top: 24, left: 45, rotate: -7 },
-            { top: 8, left: 30, rotate: 4 }
+        // Predefined Tailwind classes for better spread
+        const positionClasses = [
+            "absolute top-[10%] left-[20%] rotate-[-5deg]",
+            "absolute top-[40%] left-[25%] rotate-[-7deg]",
+            "absolute top-[5%] left-[40%] rotate-[8deg]",
+            "absolute top-[32%] left-[55%] rotate-[10deg]",
+            "absolute top-[20%] right-[35%] rotate-[2deg]",
+            "absolute top-[24%] left-[45%] rotate-[-7deg]",
+            "absolute top-[8%] left-[30%] rotate-[4deg]",
         ];
 
-        // Cycle through positions if we have more items than positions
-        const position = positions[index % positions.length];
+        // Cycle through classes if we have more items than predefined classes
+        const className = positionClasses[index % positionClasses.length];
 
         return {
             title: event.filename,
             image: event.baseUrl,
-            className: `absolute ${position.right ? `right-[${position.right}%]` : `left-[${position.left}%]`} top-[${position.top}%] rotate-[${position.rotate}deg]`,
+            className,
         };
     })
 
