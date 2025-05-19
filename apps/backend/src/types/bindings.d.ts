@@ -16,6 +16,7 @@ export type Env = {
   GITHUB_CLIENT_ID: string;
   GITHUB_CLIENT_SECRET: string;
   GROQ_API_KEY: string;
+  GOOGLE_CALENDAR_API_KEY: string;
 }
 
 // export type Variables = {

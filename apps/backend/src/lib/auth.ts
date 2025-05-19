@@ -6,15 +6,22 @@ import { account, session, user, verification } from "@/lib/db/schema/auth.schem
 
 // Create a dummy DB client for the CLI to work with
 // This will only be used when running the CLI, not in production
-const dummyDb = new CustomDrizzleClient({
+const dummyDrizzleClient = new CustomDrizzleClient({
     url: process.env.DATABASE_URL || "file:./dev.db",
     authToken: process.env.DATABASE_AUTH_TOKEN || ""
 });
 
+const dummyDb = await dummyDrizzleClient.client()
 
 export const auth = betterAuth({
     database: drizzleAdapter(dummyDb, {
         provider: "sqlite", // or "mysql", "sqlite"
+        schema: {
+            user,
+            session,
+            account,
+            verification
+        }
     })
 });
 
@@ -50,6 +57,13 @@ export const createAuth = async (env: Env) => {
             google: {
                 clientId: env.GOOGLE_CLIENT_ID as string,
                 clientSecret: env.GOOGLE_CLIENT_SECRET as string,
+                scope: [
+                    'https://www.googleapis.com/auth/calendar.events.readonly',
+                    'https://www.googleapis.com/auth/calendar.readonly',
+                    'https://www.googleapis.com/auth/photoslibrary.readonly'
+                ],
+                accessType: 'offline',
+                prompt: 'consent'
             },
             github: {
                 clientId: env.GITHUB_CLIENT_ID as string,
@@ -72,10 +86,10 @@ export const createAuth = async (env: Env) => {
                 secure: true, // Ensures cookies are only sent over HTTPS
             }
         },
-        rateLimit: {
-            window: 10, // time window in seconds
-            max: 100, // max requests in the window
-        },
+        // rateLimit: {
+        //     window: 10, // time window in seconds
+        //     max: 100, // max requests in the window
+        // },
 
     });
 };
