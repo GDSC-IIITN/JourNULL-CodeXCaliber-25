@@ -1,90 +1,121 @@
-"use client";
-import ImageUploader from "@/components/media-uploader";
-import { DynamicMedia } from "@/components/showMedia";
+'use client'
 import { ModeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import VideoCaptureUploader from "@/components/video-recorder";
-import { useIntegrations } from "@/hooks/integrations";
-import { signOut, useSession } from "@/lib/auth/auth-client";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Gravity, MatterBody } from "@/components/ui/gravity";
+import { HyperText } from "@/components/ui/hyper-text";
+import { useSession } from "@/lib/auth/auth-client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
 export default function Dashboard() {
-    const { data: session } = useSession();
+    const date = new Date();
+    const formattedDate = date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
     const router = useRouter();
-    const { getGoogleCalendarEvents, getGooglePhotosEvents } = useIntegrations()
 
+    const session = useSession()
     return (
-        <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-                <div>
-                    <h1 className="text-2xl font-bold mb-4 ">Dashboard</h1>
-                    <p className="mb-4">Welcome to the dashboard!</p>
-                </div>
-                <div className="flex items-center gap-4">
-                    <ModeToggle />
-                    <Button onClick={() => {
-                        signOut()
-                            .then(() => {
-                                router.push("/auth/signin");
-                            })
-                            .catch((error) => {
-                                console.error("Error signing out:", error);
-                                router.push("/auth/signin");
-                            });
-                    }}>Logout</Button>
-                </div>
-            </div>
-
-            {/* Display user information */}
-            {session?.user && (
-                <div className="bg-card p-4 rounded-lg shadow">
-                    <h2 className="text-xl font-semibold mb-2">Your Profile</h2>
-                    <div className="flex items-center gap-4">
-                        {session.user.image && (
-                            <Image
-                                src={session.user.image}
-                                alt="Profile"
-                                className="w-16 h-16 rounded-full"
-                                width={64}
-                                height={64}
-                            />
-                        )}
-                        <div>
-                            <p className="font-medium">{session.user.name || 'User'}</p>
-                            <p className="text-muted-foreground">{session.user.email}</p>
-                        </div>
+        <div className="w-screen h-screen flex flex-col relative font-azeretMono overflow-hidden">
+            <HyperText
+                className="text-9xl z-50 max-w-3/4 m-4 font-bold text-black dark:text-white "
+                text={formattedDate}
+            />
+            <div className="flex absolute top-0 right-0 z-50 gap-2 m-4">
+                <Button className="rounded-full py-0 ps-0">
+                    <div className="me-0.5 flex aspect-square h-full p-1.5">
+                        <Image
+                            className="h-auto w-full rounded-full"
+                            src={session.data?.user.image || 'https://originui.com/avatar.jpg'}
+                            alt="Profile image"
+                            width={24}
+                            height={24}
+                            aria-hidden="true"
+                        />
                     </div>
-                </div>
-            )}
+                    @{session.data?.user?.name}
+                </Button>
+                <ModeToggle />
+            </div>
+            {/* 
+            <div className="pt-20 text-6xl sm:text-7xl md:text-8xl text-black w-full text-center font-calendas italic dark:text-white">
+                JourNull
+            </div> */}
 
-            <Card className="mt-8 p-4 bg-muted rounded-lg">
-                <h3 className="text-lg font-medium mb-2">Session Debug Info</h3>
-                <pre className="text-xs overflow-auto p-2 bg-background rounded">
-                    {JSON.stringify(session, null, 2)}
-                </pre>
+            {/* <p className="pt-4 text-base sm:text-xl md:text-2xl text-black w-full text-center dark:text-white">
+                components made with:
+            </p> */}
+            <Gravity gravity={{ x: 0, y: 1 }} className="w-full h-[calc(100vh-200px)]">
+                <MatterBody
+                    matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
+                    x="30%"
+                    y="10%"
+                >
+                    <div onClick={() => router.push('/dream-journal')} className="text-xl sm:text-2xl md:text-3xl bg-[#0015ff] dark:bg-[#0015ff] text-white rounded-full px-8 py-4">
+                        Dream Journal 😶‍🌫️
+                    </div>
+                </MatterBody>
+                <MatterBody
+                    matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
+                    x="30%"
+                    y="30%"
+                >
+                    <div className="text-xl sm:text-2xl md:text-3xl bg-[#E794DA] text-white rounded-full hover:cursor-grab px-8 py-4 ">
+                        typescript
+                    </div>
+                </MatterBody>
+                <MatterBody
+                    matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
+                    x="40%"
+                    y="20%"
+                    angle={10}
+                >
+                    <div className="text-xl sm:text-2xl md:text-3xl bg-[#1f464d]  text-white rounded-full hover:cursor-grab px-8 py-4 ">
+                        motion
+                    </div>
+                </MatterBody>
+                <MatterBody
+                    matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
+                    x="75%"
+                    y="10%"
+                >
+                    <div className="text-xl sm:text-2xl md:text-3xl bg-[#ff5941]  text-white [#E794DA] rounded-full hover:cursor-grab px-8 py-4 ">
+                        tailwind
+                    </div>
+                </MatterBody>
+                <MatterBody
+                    matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
+                    x="80%"
+                    y="20%"
+                >
+                    <div className="text-xl sm:text-2xl md:text-3xl bg-orange-500  text-white [#E794DA] rounded-full hover:cursor-grab px-8 py-4 ">
+                        drei
+                    </div>
+                </MatterBody>
+                <MatterBody
+                    matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
+                    x="50%"
+                    y="10%"
+                >
+                    <div className="text-xl sm:text-2xl md:text-3xl bg-[#ffd726]  text-white [#E794DA] rounded-full hover:cursor-grab px-8 py-4 ">
+                        matter-js
+                    </div>
+                </MatterBody>
+            </Gravity>
+
+            <Card className="w-full z-50 m-4 h-1/2 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800" onClick={() => router.push('/recents')}>
+                <CardHeader>
+                    <CardTitle>
+                        <h1>
+                            New Entry
+                        </h1>
+                    </CardTitle>
+                </CardHeader>
             </Card>
-
-            <ImageUploader />
-            <DynamicMedia fileKey="1747293854076_Screen Recording 2023-10-31 at 8.58.49 PM.mov" />
-            <VideoCaptureUploader />
-            {
-                getGoogleCalendarEvents.data && (
-                    <Card className="mt-8 p-4 bg-muted rounded-lg">
-                        <h3 className="text-lg font-medium mb-2">Google Calendar Events</h3>
-                        <pre className="text-xs overflow-auto p-2 bg-background rounded">{JSON.stringify(getGoogleCalendarEvents.data, null, 2)}</pre>
-                    </Card>
-                )
-            }
-            {
-                getGooglePhotosEvents.data && (
-                    <Card className="mt-8 p-4 bg-muted rounded-lg">
-                        <h3 className="text-lg font-medium mb-2">Google Photos Events</h3>
-                        <pre className="text-xs overflow-auto p-2 bg-background rounded">{JSON.stringify(getGooglePhotosEvents.data, null, 2)}</pre>
-                    </Card>
-                )
-            }
-        </div>
+        </div >
     );
-} 
+}
+

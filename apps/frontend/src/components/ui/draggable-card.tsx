@@ -14,9 +14,11 @@ import {
 export const DraggableCardBody = ({
     className,
     children,
+    id,
 }: {
     className?: string;
     children?: React.ReactNode;
+    id: string;
 }) => {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -58,28 +60,46 @@ export const DraggableCardBody = ({
         springConfig,
     );
 
+    // Get initial position from localStorage
+    const getInitialPosition = () => {
+        if (typeof window === 'undefined') return { x: 0, y: 0 };
+        const savedPosition = localStorage.getItem(`card-position-${id}`);
+        if (savedPosition) {
+            try {
+                return JSON.parse(savedPosition);
+            } catch (e) {
+                return { x: 0, y: 0 };
+            }
+        }
+        return { x: 0, y: 0 };
+    };
+
+    const initialPosition = getInitialPosition();
+
     useEffect(() => {
         // Update constraints when component mounts or window resizes
         const updateConstraints = () => {
             if (typeof window !== "undefined") {
-                setConstraints({
-                    top: -window.innerHeight / 2,
-                    left: -window.innerWidth / 2,
-                    right: window.innerWidth / 2,
-                    bottom: window.innerHeight / 2,
-                });
+                const container = cardRef.current?.closest('.draggable-container');
+                if (container) {
+                    const containerRect = container.getBoundingClientRect();
+                    const extraSpace = {
+                        x: containerRect.width * 0.2,
+                        y: containerRect.height * 0.2
+                    };
+                    setConstraints({
+                        top: -containerRect.height / 2 - extraSpace.y,
+                        left: -containerRect.width / 2 - extraSpace.x,
+                        right: containerRect.width / 2 + extraSpace.x,
+                        bottom: containerRect.height / 2 + extraSpace.y,
+                    });
+                }
             }
         };
 
         updateConstraints();
-
-        // Add resize listener
         window.addEventListener("resize", updateConstraints);
-
-        // Clean up
-        return () => {
-            window.removeEventListener("resize", updateConstraints);
-        };
+        return () => window.removeEventListener("resize", updateConstraints);
     }, []);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -109,11 +129,34 @@ export const DraggableCardBody = ({
             ref={cardRef}
             drag
             dragConstraints={constraints}
+            initial={initialPosition}
             onDragStart={() => {
                 document.body.style.cursor = "grabbing";
             }}
             onDragEnd={(event, info) => {
                 document.body.style.cursor = "default";
+
+                // Store the relative position in localStorage
+                if (cardRef.current) {
+                    const container = cardRef.current.closest('.draggable-container');
+                    if (container) {
+                        const cardRect = cardRef.current.getBoundingClientRect();
+                        const containerRect = container.getBoundingClientRect();
+
+                        // Calculate position relative to container center, matching the constraint system
+                        const relativeX = (cardRect.left + cardRect.width / 2) - (containerRect.left + containerRect.width / 2);
+                        const relativeY = (cardRect.top + cardRect.height / 2) - (containerRect.top + containerRect.height / 2);
+
+                        const position = {
+                            x: relativeX,
+                            y: relativeY,
+                        };
+                        localStorage.setItem(
+                            `card-position-${id}`,
+                            JSON.stringify(position)
+                        );
+                    }
+                }
 
                 controls.start({
                     rotateX: 0,
@@ -123,6 +166,7 @@ export const DraggableCardBody = ({
                         ...springConfig,
                     },
                 });
+
                 const currentVelocityX = velocityX.get();
                 const currentVelocityY = velocityY.get();
 
@@ -186,6 +230,6 @@ export const DraggableCardContainer = ({
     children?: React.ReactNode;
 }) => {
     return (
-        <div className={cn("[perspective:3000px]", className)}>{children}</div>
+        <div className={cn("[perspective:3000px] draggable-container", className)}>{children}</div>
     );
 };
