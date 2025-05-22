@@ -15,6 +15,10 @@ module.exports = {
         protocol: 'https',
         hostname: 'journull.de78d66e79f088b038213c70f0bff2a1.r2.cloudflarestorage.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'originui.com',
+      },
     ],
   },
 }
