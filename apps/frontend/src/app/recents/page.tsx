@@ -8,25 +8,30 @@ import {
 } from "@/components/ui/draggable-card";
 import { useIntegrations } from "@/hooks/integrations";
 import { debounce } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useCreateJournal, useUpdateJournal } from "@/hooks/journal";
 export default function RecentsPage() {
     const { getGooglePhotosEvents } = useIntegrations()
     const { data: googlePhotosEvents, isLoading, error } = getGooglePhotosEvents
-    const [journalId, setJournalId] = useState<string>("")
+    const [journalId] = useState<string>("")
     const [content, setContent] = useState<string>("")
 
     //on content change, i want to save the content to the database with debounce which i have already created in the utils folder and use the createJournal and updateJournal hooks
     const { mutate: createJournal } = useCreateJournal()
     const { mutate: updateJournal } = useUpdateJournal(journalId)
 
-    const debouncedSaveContent = debounce((content: string) => {
+    const saveContent = useCallback((content: string) => {
         if (journalId) {
             updateJournal({ content, title: "Recents" })
         } else {
             createJournal({ content, title: "Recents", category: "journal" })
         }
-    }, 1000)
+    }, [journalId, updateJournal, createJournal])
+
+    const debouncedSaveContent = useCallback(
+        debounce(saveContent, 1000),
+        [saveContent]
+    )
 
     useEffect(() => {
         const date = new Date()
@@ -36,7 +41,7 @@ export default function RecentsPage() {
 
     useEffect(() => {
         debouncedSaveContent(content)
-    }, [content])
+    }, [content, debouncedSaveContent])
 
     const clearCardPositions = () => {
         if (googlePhotosEvents?.mediaItems) {

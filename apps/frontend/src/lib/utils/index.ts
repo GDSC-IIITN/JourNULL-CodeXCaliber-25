@@ -170,10 +170,10 @@ export async function handleJsonStreamResponse<T>(
   }
 }
 
-export function debounce(func: (...args: any[]) => void, delay: number) {
+export function debounce<T extends (...args: Parameters<T>) => void>(func: T, delay: number): T {
   let timeout: NodeJS.Timeout;
-  return (...args: any[]) => {
+  return ((...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), delay);
-  };
+  }) as T;
 }

@@ -67,7 +67,7 @@ export const DraggableCardBody = ({
         if (savedPosition) {
             try {
                 return JSON.parse(savedPosition);
-            } catch (e) {
+            } catch {
                 return { x: 0, y: 0 };
             }
         }
@@ -133,7 +133,7 @@ export const DraggableCardBody = ({
             onDragStart={() => {
                 document.body.style.cursor = "grabbing";
             }}
-            onDragEnd={(event, info) => {
+            onDragEnd={(_, info) => {
                 document.body.style.cursor = "default";
 
                 // Store the relative position in localStorage

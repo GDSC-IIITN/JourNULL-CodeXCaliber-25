@@ -4,7 +4,6 @@ import { DynamicMedia } from "@/components/showMedia";
 import { ModeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import VideoCaptureUploader from "@/components/video-recorder";
 import { useIntegrations } from "@/hooks/integrations";
 import { signOut, useSession } from "@/lib/auth/auth-client";
 import Image from "next/image";
@@ -68,7 +67,6 @@ export default function Testing() {
 
             <ImageUploader />
             <DynamicMedia fileKey="1747293854076_Screen Recording 2023-10-31 at 8.58.49 PM.mov" />
-            {/* <VideoCaptureUploader /> */}
             {
                 getGoogleCalendarEvents.data && (
                     <Card className="mt-8 p-4 bg-muted rounded-lg">

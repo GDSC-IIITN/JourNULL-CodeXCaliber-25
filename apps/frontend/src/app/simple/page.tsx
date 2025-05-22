@@ -1,8 +1,6 @@
 "use client"
 import { ModeToggle } from "@/components/theme/theme-toggle"
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
-import { ChevronLeft } from "lucide-react"
-
 import { useState } from "react"
 
 export default function Page() {

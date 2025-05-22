@@ -22,6 +22,8 @@ import Matter, {
   Runner,
   World,
 } from "matter-js"
+// @ts-expect-error - poly-decomp is required by matter-js
+import polyDecomp from "poly-decomp"
 
 import { cn } from "@/lib/utils"
 
@@ -143,7 +145,8 @@ const MatterBody = ({
 
   useEffect(() => {
     if (!elementRef.current || !context) return
-    context.registerElement(idRef.current, elementRef.current, {
+    const id = idRef.current
+    context.registerElement(id, elementRef.current, {
       children,
       matterBodyOptions,
       bodyType,
@@ -155,8 +158,8 @@ const MatterBody = ({
       ...props,
     })
 
-    return () => context.unregisterElement(idRef.current)
-  }, [props, children, matterBodyOptions, isDraggable])
+    return () => context.unregisterElement(id)
+  }, [props, children, matterBodyOptions, isDraggable, bodyType, sampleLength, x, y, angle, context])
 
   return (
     <div
@@ -291,7 +294,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       const height = canvas.current.offsetHeight
       const width = canvas.current.offsetWidth
 
-      Common.setDecomp(require("poly-decomp"))
+      Common.setDecomp(polyDecomp)
 
       engine.current.gravity.x = gravity.x
       engine.current.gravity.y = gravity.y
@@ -369,7 +372,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
         ).length > 0
 
       if (grabCursor) {
-        Events.on(engine.current, "beforeUpdate", (event) => {
+        Events.on(engine.current, "beforeUpdate", () => {
           if (canvas.current) {
             if (!mouseDown.current && !touchingMouse()) {
               canvas.current.style.cursor = "default"
@@ -381,7 +384,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
           }
         })
 
-        canvas.current.addEventListener("mousedown", (event) => {
+        canvas.current.addEventListener("mousedown", () => {
           mouseDown.current = true
 
           if (canvas.current) {
@@ -392,7 +395,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
             }
           }
         })
-        canvas.current.addEventListener("mouseup", (event) => {
+        canvas.current.addEventListener("mouseup", () => {
           mouseDown.current = false
 
           if (canvas.current) {
@@ -416,9 +419,16 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
 
       if (autoStart) {
         runner.current.enabled = true
-        startEngine()
+        if (runner.current) {
+          Runner.run(runner.current, engine.current)
+        }
+        if (render.current) {
+          Render.run(render.current)
+        }
+        frameId.current = requestAnimationFrame(updateElements)
+        isRunning.current = true
       }
-    }, [updateElements, debug, autoStart])
+    }, [debug, autoStart, gravity.x, gravity.y, addTopWall, grabCursor, updateElements])
 
     // Clear the Matter.js world
     const clearRenderer = useCallback(() => {
@@ -464,7 +474,6 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
     const startEngine = useCallback(() => {
       if (runner.current) {
         runner.current.enabled = true
-
         Runner.run(runner.current, engine.current)
       }
       if (render.current) {
@@ -472,7 +481,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       }
       frameId.current = requestAnimationFrame(updateElements)
       isRunning.current = true
-    }, [updateElements, canvasSize])
+    }, [updateElements])
 
     const stopEngine = useCallback(() => {
       if (!isRunning.current) return
@@ -509,7 +518,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       })
       updateElements()
       handleResize()
-    }, [])
+    }, [canvasSize.width, canvasSize.height, handleResize, stopEngine, updateElements])
 
     useImperativeHandle(
       ref,
@@ -518,7 +527,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
         stop: stopEngine,
         reset,
       }),
-      [startEngine, stopEngine]
+      [startEngine, stopEngine, reset]
     )
 
     useEffect(() => {
