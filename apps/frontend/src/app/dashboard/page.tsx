@@ -118,7 +118,7 @@ export default function Dashboard() {
                         <CirclePlus className="w-5 h-5 text-gray-500 animate-pulse" />
                     </CardTitle>
                     <CardDescription>
-                        Today's Journal
+                        Today&apos;s Journal
                     </CardDescription>
                 </CardHeader>
 
