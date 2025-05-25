@@ -8,10 +8,15 @@ export enum INTEGRATIONS {
     GOOGLE_PHOTOS = 'googlePhotos',
 }
 
-export enum JOURNAL {
-    JOURNALS = 'journals',
-    JOURNAL = 'journal',
-    CREATE_JOURNAL = 'createJournal',
-    UPDATE_JOURNAL = 'updateJournal',
-    DELETE_JOURNAL = 'deleteJournal',
-}
+export const JOURNAL = {
+    JOURNALS: 'journals',
+    JOURNAL: 'journal',
+    CREATE_JOURNAL: 'create-journal',
+    UPDATE_JOURNAL: 'update-journal',
+    DELETE_JOURNAL: 'delete-journal',
+} as const;
+
+export const EMOTIONS = {
+    EMOTIONS_BY_JOURNAL: 'emotions-by-journal',
+    JOURNALS_BY_EMOTION: 'journals-by-emotion',
+} as const;

@@ -1,6 +1,6 @@
 import { CustomDrizzleClient } from "@/lib/db";
 import { Context } from "hono";
-import { journals, emotions, journalTags } from "@/lib/db/schema";
+import { journals, emotions, journalTags, Emotion } from "@/lib/db/schema";
 import { journals as journalsTable } from "@/lib/db/schema/journal.schema";
 import { eq, and } from "drizzle-orm";
 import { randomUUID } from "crypto";
@@ -33,7 +33,29 @@ export class JournalService {
         })
 
         const dbClient = await db.client()
-        const result = await dbClient.select().from(journals).where(and(eq(journals.id, id), eq(journals.userId, user.id)))
+        const result = await dbClient.select({
+            id: journals.id,
+            title: journals.title,
+            content: journals.content,
+            category: journals.category,
+            userId: journals.userId,
+            emotions: emotions,
+            journal_tags: journalTags
+        })
+            .from(journals)
+            .where(and(eq(journals.id, id), eq(journals.userId, user.id)))
+            .leftJoin(emotions, eq(journals.id, emotions.journalId))
+            .leftJoin(journalTags, eq(journals.id, journalTags.journalId))
+            .then(result => {
+                const emotions = result.map(r => r.emotions).filter(Boolean).filter((emotion: any) => emotion.score > 0)
+                const tags = result.map(r => r.journal_tags).filter(Boolean);
+                return {
+                    ...result[0],
+                    emotions,
+                    tags
+                }
+            })
+        console.log(result)
 
         return result
     }
@@ -90,11 +112,13 @@ export class JournalService {
             })))
 
             // add tags to the journal
-            await dbClient.insert(journalTags).values(tags.map((tag: string) => ({
-                id: randomUUID(),
-                journalId: result[0].id,
-                tagName: tag,
-            })))
+            if (tags && tags.length > 0) {
+                await dbClient.insert(journalTags).values(tags.map((tag: string) => ({
+                    id: randomUUID(),
+                    journalId: result[0].id,
+                    tagName: tag,
+                })))
+            }
 
             return result
         } catch (error: any) {

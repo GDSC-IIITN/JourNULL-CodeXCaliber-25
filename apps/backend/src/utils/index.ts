@@ -171,29 +171,45 @@ export const getProviderAccessToken = async (ctx: Context, provider: string) => 
 export const DetermineEmotionScore = async (ctx: Context, content: string): Promise<EmotionScoreType[]> => {
     const ai = new AI(ctx, 'groq')
     const prompt = `
-  You are a helpful assistant that determines the emotion of the journal entry.
+  You are a helpful assistant that determines the emotions present in the journal entry.
   The journal entry is as follows:
   ${content}
 
-  Please determine the emotion of the journal entry.
-  and return the emotions with their scores in the following format:
+  Please analyze the journal entry and return ALL possible emotions with their scores.
+  You MUST return an array containing ALL of these emotions with their respective scores:
+  ${Object.values(Emotion).join(', ')}
+
+  Return the emotions in this exact format:
   [
-  {
-    "emotion": "happy" | "sad" | "angry" | "fearful" | "disgusted" | "surprised" | "content" | "anxious" | "depressed" | "exhausted" | "stressed" | "other",
-    "score": 0.9
-  }
+    {
+      "emotion": "happy",
+      "score": 0.8
+    },
+    {
+      "emotion": "sad",
+      "score": 0.2
+    }
+    // ... include ALL emotions listed above with their scores
   ]
 
-  where score is a number between 0 and 1.
-  and the emotion should be one of the following:
-  ${Object.values(Emotion).join(', ')}
-  always return an array of emotions with their scores for each emotion.
+  Rules:
+  1. Score must be a number between 0 and 1
+  2. You MUST include ALL emotions listed above
+  3. Return ONLY the JSON array, no other text
+  4. Each emotion should have a score, even if it's 0
+  5. The sum of all scores should be between 0 and 1
+  6. There should be no other text in the response, only the JSON array.
 `
-    const response = await ai.generate({ prompt })
 
-    const parsed = EmotionScoreSchema.array().safeParse(response.text)
-    if (!parsed.success) {
-        throw new Error('Failed to parse emotion score')
+    const response = await ai.generate({ prompt });
+    try {
+        const parsedResponse = JSON.parse(response.text);
+        if (!Array.isArray(parsedResponse)) {
+            throw new Error('Invalid response format: expected an array');
+        }
+        return parsedResponse;
+    } catch (error) {
+        console.error('Error parsing emotion scores:', error);
+        throw new Error('Failed to parse emotion scores from AI response');
     }
-    return parsed.data
 }
