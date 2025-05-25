@@ -15,6 +15,13 @@
       "when": 1746811600466,
       "tag": "0001_faulty_alex_power",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1748164945758,
+      "tag": "0002_short_dexter_bennett",
+      "breakpoints": true
     }
   ]
 }
