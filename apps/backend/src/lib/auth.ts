@@ -7,8 +7,8 @@ import { account, session, user, verification } from "@/lib/db/schema/auth.schem
 // Create a dummy DB client for the CLI to work with
 // This will only be used when running the CLI, not in production
 const dummyDrizzleClient = new CustomDrizzleClient({
-    url: process.env.DATABASE_URL || "file:./dev.db",
-    authToken: process.env.DATABASE_AUTH_TOKEN || ""
+    url: process.env.DATABASE_URL as string,
+    authToken: process.env.DATABASE_AUTH_TOKEN as string
 });
 
 const dummyDb = await dummyDrizzleClient.client()

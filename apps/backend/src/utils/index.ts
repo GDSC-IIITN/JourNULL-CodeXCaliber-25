@@ -2,12 +2,13 @@ import { CustomChromaClient } from "@/lib/chromaDB";
 import axios from "axios";
 
 import { Context } from "hono";
-import { CloudflareEmbeddingResponse } from "@/types/utils";
+import { CloudflareEmbeddingResponse, Emotion, EmotionScoreSchema, EmotionScoreType } from "@/types/utils";
 import { account, journals } from "@/lib/db/schema";
 import { CustomDrizzleClient } from "@/lib/db";
 import { inArray } from "drizzle-orm";
 import { createAuth } from "@/lib/auth";
 import { eq } from "drizzle-orm";
+import { AI } from "@/lib/ai";
 
 export class CloudFlareEmbeddingFunction {
     private api_key: string;
@@ -112,6 +113,7 @@ export const getRelevantEntries = async (current_entry: string, ctx: Context) =>
         );
         const embedding = await embeddingFunction.generate([current_entry]);
 
+
         const queryResult = await collection.query({
             queryEmbeddings: embedding,
             nResults: 5,
@@ -145,8 +147,6 @@ export const getProviderAccessToken = async (ctx: Context, provider: string) => 
     })
 
 
-
-
     const drizzleClient = new CustomDrizzleClient({
         url: ctx.env.DATABASE_URL,
         authToken: ctx.env.DATABASE_AUTH_TOKEN
@@ -166,4 +166,50 @@ export const getProviderAccessToken = async (ctx: Context, provider: string) => 
         throw new Error('Account not found')
     }
     return account_id?.accessToken
+}
+
+export const DetermineEmotionScore = async (ctx: Context, content: string): Promise<EmotionScoreType[]> => {
+    const ai = new AI(ctx, 'groq')
+    const prompt = `
+  You are a helpful assistant that determines the emotions present in the journal entry.
+  The journal entry is as follows:
+  ${content}
+
+  Please analyze the journal entry and return ALL possible emotions with their scores.
+  You MUST return an array containing ALL of these emotions with their respective scores:
+  ${Object.values(Emotion).join(', ')}
+
+  Return the emotions in this exact format:
+  [
+    {
+      "emotion": "happy",
+      "score": 0.8
+    },
+    {
+      "emotion": "sad",
+      "score": 0.2
+    }
+    // ... include ALL emotions listed above with their scores
+  ]
+
+  Rules:
+  1. Score must be a number between 0 and 1
+  2. You MUST include ALL emotions listed above
+  3. Return ONLY the JSON array, no other text
+  4. Each emotion should have a score, even if it's 0
+  5. The sum of all scores should be between 0 and 1
+  6. There should be no other text in the response, only the JSON array.
+`
+
+    const response = await ai.generate({ prompt });
+    try {
+        const parsedResponse = JSON.parse(response.text);
+        if (!Array.isArray(parsedResponse)) {
+            throw new Error('Invalid response format: expected an array');
+        }
+        return parsedResponse;
+    } catch (error) {
+        console.error('Error parsing emotion scores:', error);
+        throw new Error('Failed to parse emotion scores from AI response');
+    }
 }

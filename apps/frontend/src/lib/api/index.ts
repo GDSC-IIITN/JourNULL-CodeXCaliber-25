@@ -4,6 +4,7 @@ import { DevAPI } from './dev';
 import { authClient } from '../auth/auth-client';
 import { redirect } from 'next/navigation';
 import { JournalAPI } from './journal';
+import { EmotionsAPI } from './emotions';
 import { AiAPI } from './ai';
 import { IntegrationsAPI } from './integrations';
 import { AuthAPI } from './auth';
@@ -13,6 +14,7 @@ class ApiSdk {
 
     dev: DevAPI;
     journal: JournalAPI;
+    emotions: EmotionsAPI;
     ai: AiAPI;
     integrations: IntegrationsAPI;
     auth: AuthAPI;
@@ -20,6 +22,7 @@ class ApiSdk {
         this.mainInstance = this.createAxios(env.NEXT_PUBLIC_API_URL);
         this.dev = new DevAPI(this.mainInstance)
         this.journal = new JournalAPI(this.mainInstance)
+        this.emotions = new EmotionsAPI(this.mainInstance)
         this.ai = new AiAPI(this.mainInstance)
         this.integrations = new IntegrationsAPI(this.mainInstance)
         this.auth = new AuthAPI(this.mainInstance)

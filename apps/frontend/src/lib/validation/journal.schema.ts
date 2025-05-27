@@ -26,7 +26,14 @@ export const journalSchema = z.object({
 });
 
 export const journalResponseSchema = z.object({
-    message: z.array(journalSchema),
+    message: z.array(z.object({
+        ...journalSchema.shape,
+        emotions: z.array(z.object({
+            emotion: z.string(),
+            score: z.number(),
+        })),
+        tags: z.array(z.string()),
+    })),
     meta: z.record(z.unknown()).optional(),
     is_error: z.boolean().optional(),
 });

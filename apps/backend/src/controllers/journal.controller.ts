@@ -35,6 +35,7 @@ export class JournalController {
         title: string;
         content: string;
         category: string;
+        tags: string[];
     }) {
         try {
             const message = await JournalService.createJournalService(ctx, payload);
@@ -52,6 +53,7 @@ export class JournalController {
         id: string;
         title: string;
         content: string;
+        tags: string[];
     }) {
         try {
             const message = await JournalService.updateJournalService(ctx, payload);
