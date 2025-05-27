@@ -38,6 +38,7 @@ export const journalsByEmotionResponseSchema = z.object({
     is_error: z.boolean().optional(),
 });
 
+
 export type EmotionType = z.infer<typeof emotionTypeSchema>;
 export type JournalIdInput = z.infer<typeof journalIdSchema>;
 export type Emotion = z.infer<typeof emotionSchema>;
