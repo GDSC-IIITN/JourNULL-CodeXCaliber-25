@@ -29,7 +29,7 @@ export function JournalCard({ journal }: JournalCardProps) {
                 ) : (
                     <Image
                         src={ghibliData?.url || 'https://www.ghibli.jp/images/common/logo.png'}
-                        loading="lazy"
+                        priority
                         alt={ghibliData?.film_name || 'Default image'}
                         className='h-48 w-full object-cover'
                         width={270}
@@ -41,9 +41,9 @@ export function JournalCard({ journal }: JournalCardProps) {
                     <h1 className='font-mono leading-snug text-zinc-950 dark:text-zinc-50'>
                         {journal.title || 'Untitled'}
                     </h1>
-                    <p className='text-zinc-700 dark:text-zinc-400 line-clamp-2'>
+                    <div className='text-zinc-700 dark:text-zinc-400 line-clamp-2'>
                         {journal.content ? <div dangerouslySetInnerHTML={{ __html: `${journal.content.substring(0, 100)}...` }} /> : 'No content yet'}
-                    </p>
+                    </div>
                 </div>
             </div>
         </Tilt>

@@ -17,7 +17,7 @@ export default function Dashboard() {
     const { data: journals } = useGetJournals();
     const isMobile = useMobile();
     return (
-        <div className="w-screen h-screen flex flex-col font-azeretMono overflow-y-auto bg-black">
+        <div className="w-screen h-screen flex flex-col font-azeretMono overflow-y-auto dark:bg-black">
             <Particles className="absolute top-0 left-0 w-full h-screen z-0" />
             <HyperText
                 className={cn("text-9xl z-50 max-w-3/4 m-4 font-bold text-black dark:text-white", isMobile ? "text-4xl !text-center" : "text-9xl ")}
