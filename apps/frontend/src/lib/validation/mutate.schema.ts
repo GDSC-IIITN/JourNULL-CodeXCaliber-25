@@ -4,7 +4,7 @@ import { id } from './base.schema';
 export const mutateEntitySchema = z
   .object({
     id: id,
-  })
-  .transform((data) => data.id);
+  }).array()
+  .transform((data) => data[0].id);
 
 export type MutateEntity = z.infer<typeof mutateEntitySchema>;

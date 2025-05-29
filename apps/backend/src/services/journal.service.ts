@@ -2,7 +2,7 @@ import { CustomDrizzleClient } from "@/lib/db";
 import { Context } from "hono";
 import { journals, emotions, journalTags, Emotion } from "@/lib/db/schema";
 import { journals as journalsTable } from "@/lib/db/schema/journal.schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
 import { DetermineEmotionScore, getPookie } from "@/utils";
 import { EmotionScoreType } from "@/types/utils";
@@ -16,7 +16,7 @@ export class JournalService {
         })
 
         const dbClient = await db.client()
-        const result = await dbClient.select().from(journals).where(eq(journals.userId, user.id))
+        const result = await dbClient.select().from(journals).where(eq(journals.userId, user.id)).orderBy(desc(journals.createdAt))
 
         return result
     }
@@ -146,11 +146,24 @@ export class JournalService {
             const dbClient = await db.client()
             const user = ctx.get('user')
 
+            const pookie = await getPookie(ctx)
+
 
             const result = await dbClient.update(journals).set({
                 title,
                 content,
-            }).where(and(eq(journals.id, id), eq(journals.userId, user.id)))
+            }).where(and(eq(journals.id, id), eq(journals.userId, user.id))).returning({ id: journalsTable.id })
+
+            // update pookie
+            await pookie.update({
+                ids: [id],
+                metadatas: [{
+                    title: title,
+                    content: content,
+                    userId: user.id,
+                }],
+                documents: [content]
+            })
 
             // update emotions
             await dbClient.delete(emotions).where(eq(emotions.journalId, id))
@@ -164,11 +177,11 @@ export class JournalService {
 
             // update tags
             await dbClient.delete(journalTags).where(eq(journalTags.journalId, id))
-            await dbClient.insert(journalTags).values(tags.map((tag: string) => ({
-                id: randomUUID(),
-                journalId: id,
-                tagName: tag,
-            })))
+            // await dbClient.insert(journalTags).values(tags.map((tag: string) => ({
+            //     id: randomUUID(),
+            //     journalId: id,
+            //     tagName: tag,
+            // })))
 
             return result
         } catch (error: any) {

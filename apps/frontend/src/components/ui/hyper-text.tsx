@@ -4,9 +4,10 @@ import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils/index";
+const date = new Date();
 
 interface HyperTextProps {
-  text: string;
+  text?: string;
   duration?: number;
   framerProps?: Variants;
   className?: string;
@@ -16,9 +17,14 @@ interface HyperTextProps {
 const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 const getRandomInt = (max: number) => Math.floor(Math.random() * max);
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
 
 export function HyperText({
-  text,
+  text = formattedDate,
   duration = 800,
   framerProps = {
     initial: { opacity: 0, y: -10 },
@@ -70,7 +76,7 @@ export function HyperText({
 
   return (
     <div
-      className="flex scale-100 cursor-default overflow-hidden py-2"
+      className="flex scale-100 cursor-default overflow py-2"
       onMouseEnter={triggerAnimation}
     >
       <AnimatePresence mode="wait">

@@ -19,8 +19,17 @@ module.exports = {
         protocol: 'https',
         hostname: 'originui.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.beta.cosmos.so',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.ghibli.jp',
+      },
     ],
   },
+  reactStrictMode: false,
 }
 
 export default nextConfig;

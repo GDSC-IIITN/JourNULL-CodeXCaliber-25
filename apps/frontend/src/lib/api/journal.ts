@@ -7,6 +7,7 @@ import {
     JournalResponse,
     journalResponseSchema
 } from "../validation/journal.schema";
+import { MutateEntity, mutateEntitySchema } from "../validation/mutate.schema";
 
 export class JournalAPI {
     private axios: Axios;
@@ -26,17 +27,17 @@ export class JournalAPI {
         return journalResponseSchema.parse(response.data);
     }
 
-    async createJournal(data: CreateJournalInput): Promise<JournalResponse> {
+    async createJournal(data: CreateJournalInput): Promise<MutateEntity> {
         const validatedData = createJournalSchema.parse(data);
         const response = await this.axios.post("/journal", validatedData);
-        return journalResponseSchema.parse(response.data);
+        return response.data.message[0].id
     }
 
-    async updateJournal(id: string, data: UpdateJournalInput): Promise<JournalResponse> {
+    async updateJournal(id: string, data: UpdateJournalInput): Promise<MutateEntity> {
         const validatedId = journalIdSchema.parse({ id });
         const validatedData = updateJournalSchema.parse(data);
         const response = await this.axios.put(`/journal/${validatedId.id}`, validatedData);
-        return journalResponseSchema.parse(response.data);
+        return mutateEntitySchema.parse(response.data.message);
     }
 
     async deleteJournal(id: string): Promise<JournalResponse> {

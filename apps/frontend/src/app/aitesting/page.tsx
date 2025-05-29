@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from 'react-markdown';
+import { ComicBubble } from "@/components/comic-bubble";
 
 function unescapeMarkdown(text: string): string {
     return text
@@ -45,6 +46,17 @@ export default function JournalPage() {
                     <ReactMarkdown>
                         {analysis ? unescapeMarkdown(analysis) : ''}
                     </ReactMarkdown>
+                    <ComicBubble
+                        position="right"
+                        direction="up"
+                    >
+                        <p>
+                            {analysis ? unescapeMarkdown(analysis) : ''}
+                            {isAnalyzing && (
+                                <span className="inline-block w-2 h-5 bg-blue-500 animate-pulse ml-1 align-middle" />
+                            )}
+                        </p>
+                    </ComicBubble>
                     {isAnalyzing && (
                         <span className="inline-block w-2 h-5 bg-blue-500 animate-pulse ml-1 align-middle" />
                     )}
@@ -66,6 +78,21 @@ export default function JournalPage() {
                         <p className="text-sm text-gray-500">{suggestions.suggestionReason}</p>
                     </div>
                 )}
+
+                <ComicBubble
+                    position="right"
+                    direction="up"
+                >
+                    <p>
+                        {suggestions ?
+                            <div className="p-4 bg-gray-50 rounded">
+                                <h3 className="font-medium text-lg mb-2">{suggestions.activity}</h3>
+                                <p className="text-gray-600 mb-2">{suggestions.reason}</p>
+                                <p className="text-sm text-gray-500">{suggestions.suggestionReason}</p>
+                            </div>
+                            : ''}
+                    </p>
+                </ComicBubble>
             </div>
         </div>
     );
