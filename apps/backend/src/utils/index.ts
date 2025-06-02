@@ -199,6 +199,7 @@ export const DetermineEmotionScore = async (ctx: Context, content: string): Prom
   4. Each emotion should have a score, even if it's 0
   5. The sum of all scores should be between 0 and 1
   6. There should be no other text in the response, only the JSON array.
+  7. It should strictly return the JSON array, not containg any other text or comments (like "here is the json array" or "here is the json array:")
 `
 
     const response = await ai.generate({ prompt });

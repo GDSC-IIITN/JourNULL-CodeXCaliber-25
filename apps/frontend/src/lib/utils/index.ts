@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { Emotion } from "../validation/journal.schema";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -177,3 +178,22 @@ export function debounce<T extends (...args: Parameters<T>) => void>(func: T, de
     timeout = setTimeout(() => func(...args), delay);
   }) as T;
 }
+
+// Map emotion type to emoji
+export const getEmotionEmoji = (emotion: Emotion): string => {
+  const emojiMap: Record<Emotion['emotion'], string> = {
+    happy: '😊',
+    sad: '😢',
+    angry: '😠',
+    fearful: '😨',
+    disgusted: '😖',
+    surprised: '😮',
+    content: '😐',
+    anxious: '😰',
+    depressed: '😔',
+    exhausted: '😫',
+    stressed: '😓',
+    other: '🤷‍♂️'
+  };
+  return emojiMap[emotion.emotion];
+};  

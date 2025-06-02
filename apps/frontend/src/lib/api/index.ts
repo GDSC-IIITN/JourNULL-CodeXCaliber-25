@@ -8,6 +8,7 @@ import { EmotionsAPI } from './emotions';
 import { AiAPI } from './ai';
 import { IntegrationsAPI } from './integrations';
 import { AuthAPI } from './auth';
+import { StaticAPI } from './static';
 
 class ApiSdk {
     private readonly mainInstance: Axios;
@@ -18,6 +19,7 @@ class ApiSdk {
     ai: AiAPI;
     integrations: IntegrationsAPI;
     auth: AuthAPI;
+    static: StaticAPI;
     constructor() {
         this.mainInstance = this.createAxios(env.NEXT_PUBLIC_API_URL);
         this.dev = new DevAPI(this.mainInstance)
@@ -26,6 +28,7 @@ class ApiSdk {
         this.ai = new AiAPI(this.mainInstance)
         this.integrations = new IntegrationsAPI(this.mainInstance)
         this.auth = new AuthAPI(this.mainInstance)
+        this.static = new StaticAPI(this.mainInstance)
     }
 
     private createAxios(baseURL: string): Axios {
