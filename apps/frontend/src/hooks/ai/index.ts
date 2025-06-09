@@ -8,6 +8,10 @@ export function useAi<T = string>(endpoint: AiEndpoint, options: { isJson?: bool
 
     const mutation = useMutation({
         mutationFn: async (input: string) => {
+            if (endpoint === AiEndpoint.OCTACAT) {
+                const stream = await api.ai[endpoint]({ context: input });
+                return processStream(stream);
+            }
             const stream = await api.ai[endpoint]({ journal: input });
             await processStream(stream);
         },
@@ -31,4 +35,8 @@ export function useJournalAnalysis() {
 
 export function useAiSuggestions() {
     return useAi<AiSuggestionsResponse>(AiEndpoint.AI_SUGGESTIONS, { isJson: true });
+}
+
+export function useOctacat() {
+    return useAi(AiEndpoint.OCTACAT);
 }

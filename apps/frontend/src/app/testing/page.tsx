@@ -83,6 +83,7 @@ export default function Testing() {
                     </Card>
                 )
             }
+            {/* <GlobalSearch /> */}
         </div>
     );
 } 

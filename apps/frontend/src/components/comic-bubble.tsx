@@ -1,37 +1,39 @@
 import React from 'react';
 
 interface ComicBubbleProps {
-    children: React.ReactNode;
-    position?: 'left' | 'right';
-    direction?: 'down' | 'up';
-    hover?: boolean;
-    control?: boolean;
-    noSelection?: boolean;
-    className?: string;
+  children: React.ReactNode;
+  position?: 'left' | 'right';
+  direction?: 'down' | 'up';
+  hover?: boolean;
+  control?: boolean;
+  noSelection?: boolean;
+  className?: string;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export const ComicBubble: React.FC<ComicBubbleProps> = ({
-    children,
-    position = 'left',
-    direction = 'down',
-    hover = false,
-    control = false,
-    noSelection = false,
-    className = ''
+  children,
+  position = 'left',
+  direction = 'down',
+  hover = false,
+  control = false,
+  noSelection = false,
+  className = '',
+  onClick
 }) => {
-    const bubbleClasses = [
-        'cbbl',
-        position === 'right' ? '-right' : '',
-        direction === 'up' ? '-up' : '',
-        hover ? '-hover' : '',
-        control ? '-control' : '',
-        noSelection ? '-no-selection' : '',
-        className
-    ].filter(Boolean).join(' ');
+  const bubbleClasses = [
+    'cbbl',
+    position === 'right' ? '-right' : '',
+    direction === 'up' ? '-up' : '',
+    hover ? '-hover' : '',
+    control ? '-control' : '',
+    noSelection ? '-no-selection' : '',
+    className
+  ].filter(Boolean).join(' ');
 
-    return (
-        <>
-            <style jsx>{`
+  return (
+    <>
+      <style jsx>{`
         @import url('https://fonts.googleapis.com/css2?family=Iceland&display=swap');
 
         .cbbl {
@@ -204,9 +206,9 @@ export const ComicBubble: React.FC<ComicBubbleProps> = ({
           outline: none;
         }
       `}</style>
-            <div className={bubbleClasses}>
-                {children}
-            </div>
-        </>
-    );
+      <div className={bubbleClasses} onClick={onClick}>
+        {children}
+      </div>
+    </>
+  );
 };

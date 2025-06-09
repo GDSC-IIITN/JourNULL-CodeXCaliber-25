@@ -4,7 +4,7 @@ import { useR2Uploader } from "@/hooks/r2";
 import { useCallback, useEffect, useState } from "react";
 import VideoRecorder, { RecordingCompleteData } from "react-video-recorder";
 import React from "react";
-import { XIcon, UploadIcon, RecordIcon } from "@/components/tiptap-icons";
+import { XIcon, UploadIcon, RecordIcon } from "@/components/editor/tiptap-icons";
 
 interface VideoRecorderModalProps {
     onUploadComplete?: (viewUrl: string) => void;

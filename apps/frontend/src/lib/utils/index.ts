@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { Emotion } from "../validation/journal.schema";
+import { useEffect, useState } from "react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -196,4 +197,39 @@ export const getEmotionEmoji = (emotion: Emotion): string => {
     other: '🤷‍♂️'
   };
   return emojiMap[emotion.emotion];
-};  
+};
+
+export const getClientSideCookie = (name: string): string | undefined => {
+  const cookieValue = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith(`${name}=`))
+    ?.split('=')[1];
+
+  return cookieValue;
+};
+
+export const useRandomEmoji = (interval: number = 1000) => {
+  const [emoji, setEmoji] = useState<string>('');
+  useEffect(() => {
+    const timeout = setInterval(() => {
+      const emojis = ['😊', '😢', '😠', '😨', '😖', '😮', '😐', '😰', '😔', '😫', '😓', '🤷‍♂️'];
+      const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+      setEmoji(randomEmoji);
+    }, interval);
+    return () => clearInterval(timeout);
+  }, [interval]);
+  return emoji;
+}
+
+export const playSound = () => {
+  const audio = new Audio('/sounds/click.mp3');
+  audio.play();
+}
+
+export function unescapeMarkdown(text: string): string {
+  return text
+    .replace(/\\n/g, '\n')
+    .replace(/\\"/g, '"')
+    .replace(/\\'/g, "'")
+    .replace(/\\\\/g, '\\');
+}

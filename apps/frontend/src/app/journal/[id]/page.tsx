@@ -1,7 +1,7 @@
 "use client"
 import { Particles } from "@/components/magicui/particles";
 import { ModeToggle } from "@/components/theme/theme-toggle";
-import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
+import { SimpleEditor } from "@/components/editor/tiptap-templates/simple/simple-editor";
 import { DraggableCardContainer } from "@/components/ui/draggable-card";
 import { useIntegrations } from "@/hooks/integrations";
 import { useCreateJournal, useGetJournal, useUpdateJournal } from "@/hooks/journal";
@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { SaveStatus } from "@/components/journal/SaveStatus";
 import { GooglePhotosGallery } from "@/components/journal/GooglePhotosGallery";
 import { useEffect, useMemo } from "react";
+import { TextShimmerWave } from "@/components/text-shimmer";
 
 export default function RecentsPage() {
     const router = useRouter();
@@ -60,9 +61,9 @@ export default function RecentsPage() {
 
     // Show loading state when creating a new journal
     if (isCreating || (!id || id === "new")) {
-        return <div className="flex items-center justify-center min-h-screen">
-            <div className="text-lg">Creating new journal...</div>
-        </div>;
+        return <TextShimmerWave className="text-2xl font-bold h-screen flex items-center justify-center">
+            Creating new journal...
+        </TextShimmerWave>;
     }
 
     // Handle Google Photos card positions
@@ -75,9 +76,9 @@ export default function RecentsPage() {
     };
 
     if (isJournalLoading) {
-        return <div className="flex items-center justify-center min-h-screen">
-            <div className="text-lg">Loading journal...</div>
-        </div>;
+        return <TextShimmerWave className="text-2xl font-bold h-screen flex items-center justify-center">
+            Loading journal...
+        </TextShimmerWave>;
     }
 
     if (journalError) {
@@ -95,15 +96,9 @@ export default function RecentsPage() {
     }
 
     if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
-    if (!googlePhotosEvents) {
-        return <div>No events found</div>;
+        return <TextShimmerWave className="text-2xl font-bold h-screen flex items-center justify-center">
+            Loading...
+        </TextShimmerWave>;
     }
 
     return (
@@ -125,10 +120,13 @@ export default function RecentsPage() {
                 </div>
                 <SimpleEditor content={content} setContent={setContent} />
             </div>
-
-            <GooglePhotosGallery
-                mediaItems={googlePhotosEvents.mediaItems}
-            />
+            {
+                googlePhotosEvents?.mediaItems && googlePhotosEvents.mediaItems.length > 0 && !error && (
+                    <GooglePhotosGallery
+                        mediaItems={googlePhotosEvents.mediaItems}
+                    />
+                )
+            }
         </DraggableCardContainer>
     );
 }

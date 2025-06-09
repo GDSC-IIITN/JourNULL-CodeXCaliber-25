@@ -9,7 +9,13 @@ app.use(adminMiddleware)
 app.get('/clear-pookie', async (c) => {
     const poookie = await getPookie(c)
     try {
-        const result = await poookie.delete()
+        const result = await poookie.delete(
+            {
+                ids: [
+
+                ]
+            }
+        )
         return c.json({ success: true, result })
     } catch (error: any) {
         return c.json({ success: false, error: error.message }, 500)

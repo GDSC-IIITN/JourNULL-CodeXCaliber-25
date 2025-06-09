@@ -4,6 +4,8 @@ import {
     JournalSuggestionsInput,
     journalAnalysisSchema,
     journalSuggestionsSchema,
+    OctacatInput,
+    octacatSchema,
 } from "../validation/ai.schema";
 
 export class AiAPI {
@@ -29,5 +31,15 @@ export class AiAPI {
             responseType: 'stream'
         });
         return response.data;
+    }
+
+    async octacat(data: OctacatInput): Promise<ReadableStream<Uint8Array>> {
+        console.log('octacat', data)
+        const validatedData = octacatSchema.parse(data);
+        const response = await this.axios.get("/ai/octacat", {
+            params: validatedData,
+            responseType: 'stream'
+        });
+        return response.data
     }
 }
