@@ -9,6 +9,7 @@ interface ComicBubbleProps {
   noSelection?: boolean;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onBlur?: React.FocusEventHandler<HTMLDivElement>;
 }
 
 export const ComicBubble: React.FC<ComicBubbleProps> = ({
@@ -19,7 +20,8 @@ export const ComicBubble: React.FC<ComicBubbleProps> = ({
   control = false,
   noSelection = false,
   className = '',
-  onClick
+  onClick,
+  onBlur
 }) => {
   const bubbleClasses = [
     'cbbl',
@@ -206,7 +208,7 @@ export const ComicBubble: React.FC<ComicBubbleProps> = ({
           outline: none;
         }
       `}</style>
-      <div className={bubbleClasses} onClick={onClick}>
+      <div className={bubbleClasses} onClick={onClick} onBlur={onBlur}>
         {children}
       </div>
     </>

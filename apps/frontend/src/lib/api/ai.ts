@@ -34,7 +34,6 @@ export class AiAPI {
     }
 
     async octacat(data: OctacatInput): Promise<ReadableStream<Uint8Array>> {
-        console.log('octacat', data)
         const validatedData = octacatSchema.parse(data);
         const response = await this.axios.get("/ai/octacat", {
             params: validatedData,

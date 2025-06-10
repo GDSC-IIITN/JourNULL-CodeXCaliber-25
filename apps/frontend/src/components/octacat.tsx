@@ -19,11 +19,11 @@ export default function Octacat() {
     }, [octacatData]);
 
     useEffect(() => {
-        trigger(document.body.innerText);
+        // trigger(document.body.innerText);
         const interval = setInterval(() => {
             trigger(document.body.innerText);
             console.log('triggering')
-        }, 20000);
+        }, 200000);
         return () => clearInterval(interval);
     }, [trigger]);
 
@@ -40,8 +40,10 @@ export default function Octacat() {
     return (
         <div className="fixed bottom-4 right-4 flex flex-col items-end z-[100]">
             <div className="mb-1 mr-24 max-w-[400px]">
-                <ComicBubble hover control noSelection className="m-0" onClick={() => {
-                    navigator.clipboard.writeText(data || '');
+                <ComicBubble hover control noSelection className="m-0" onBlur={() => {
+                    console.log('blur')
+                }} onClick={() => {
+                    trigger(document.body.innerText);
                     playSound();
                 }}>
                     <ReactMarkdown>
