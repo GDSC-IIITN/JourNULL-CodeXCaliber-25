@@ -46,5 +46,16 @@ jobs:
           if [ -z "${R2_BUCKET_NAME}" ]; then echo "R2_BUCKET_NAME is NOT set"; else echo "R2_BUCKET_NAME is set"; fi
           if [ -z "${R2_ACCOUNT_ID}" ]; then echo "R2_ACCOUNT_ID is NOT set"; else echo "R2_ACCOUNT_ID is set"; fi
       
+      - name: Write .env file
+        working-directory: apps/frontend
+        run: |
+          echo "R2_ACCESS_KEY_ID=${R2_ACCESS_KEY_ID}" >> .env
+          echo "R2_SECRET_ACCESS_KEY=${R2_SECRET_ACCESS_KEY}" >> .env
+          echo "R2_BUCKET_NAME=${R2_BUCKET_NAME}" >> .env
+          echo "R2_ACCOUNT_ID=${R2_ACCOUNT_ID}" >> .env
+          echo "NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}" >> .env
+          echo "NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}" >> .env
+          echo "NEXT_PUBLIC_AUTH_BASE_URL=${NEXT_PUBLIC_AUTH_BASE_URL}" >> .env
+      
       - name: Run Build
         run: pnpm run build
