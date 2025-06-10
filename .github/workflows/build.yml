@@ -39,5 +39,12 @@ jobs:
       - name: Generate Drizzle Client
         run: pnpm db:generate
       
+      - name: Check R2 env vars presence
+        run: |
+          if [ -z "${R2_ACCESS_KEY_ID}" ]; then echo "R2_ACCESS_KEY_ID is NOT set"; else echo "R2_ACCESS_KEY_ID is set"; fi
+          if [ -z "${R2_SECRET_ACCESS_KEY}" ]; then echo "R2_SECRET_ACCESS_KEY is NOT set"; else echo "R2_SECRET_ACCESS_KEY is set"; fi
+          if [ -z "${R2_BUCKET_NAME}" ]; then echo "R2_BUCKET_NAME is NOT set"; else echo "R2_BUCKET_NAME is set"; fi
+          if [ -z "${R2_ACCOUNT_ID}" ]; then echo "R2_ACCOUNT_ID is NOT set"; else echo "R2_ACCOUNT_ID is set"; fi
+      
       - name: Run Build
         run: pnpm run build
