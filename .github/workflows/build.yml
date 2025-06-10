@@ -8,13 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID || 'R2_ACCESS_KEY_ID' }}
-      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY || 'R2_SECRET_ACCESS_KEY' }}
-      R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME || 'R2_BUCKET_NAME' }}
-      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID || 'R2_ACCOUNT_ID' }}
-      NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL || 'http://localhost:3000' }}
-      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL || 'http://localhost:8787' }}
-      NEXT_PUBLIC_AUTH_BASE_URL: ${{ secrets.NEXT_PUBLIC_AUTH_BASE_URL || 'http://localhost:8787/api/auth' }}
+      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+      NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL }}
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      NEXT_PUBLIC_AUTH_BASE_URL: ${{ secrets.NEXT_PUBLIC_AUTH_BASE_URL }}
     steps:
       - uses: actions/checkout@v3
       
