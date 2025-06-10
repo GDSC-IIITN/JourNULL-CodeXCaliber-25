@@ -10,7 +10,7 @@ import { JournalCard } from "@/components/journal-card";
 import { Header } from "@/components/dashboard/header";
 import { useMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-
+import Octacat from "@/components/octacat";
 export default function Dashboard() {
 
     const router = useRouter();
@@ -23,6 +23,8 @@ export default function Dashboard() {
                 className={cn("text-9xl z-50 max-w-3/4 m-4 font-bold text-black dark:text-white", isMobile ? "text-4xl !text-center" : "text-9xl ")}
             />
             <Header />
+            <Octacat>
+            </Octacat>
             <Card className=" z-50 m-4 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 motion-preset-slide-right" onClick={() => router.push('/journal/new')}>
                 <CardHeader>
                     <CardTitle className="flex items-center justify-between">
@@ -35,8 +37,8 @@ export default function Dashboard() {
                         Today&apos;s Journal
                     </CardDescription>
                 </CardHeader>
-
             </Card>
+
 
             <Card className="z-50 m-4 h-[380px]">
 
@@ -46,6 +48,7 @@ export default function Dashboard() {
                     ))}
                 </div>
             </Card>
+
 
         </div >
 

@@ -9,6 +9,8 @@ import { inArray } from "drizzle-orm";
 import { createAuth } from "@/lib/auth";
 import { eq } from "drizzle-orm";
 import { AI } from "@/lib/ai";
+import { IncludeEnum } from "chromadb";
+import { Q } from "node_modules/@upstash/redis/zmscore-DzNHSWxc.mjs";
 
 export class CloudFlareEmbeddingFunction {
     private api_key: string;
@@ -131,6 +133,29 @@ export const getRelevantEntries = async (current_entry: string, ctx: Context) =>
         console.error('Error getting relevant entries:', error);
         throw new Error('Failed to get relevant entries');
     }
+}
+
+export const getRelevantEntriesFromEmbedding = async (embedding: number[][], ctx: Context, limit: number = 5) => {
+    const collection = await getPookie(ctx);
+    const currentUserId = ctx.get('user')?.id
+
+    console.log("✨ Current user id:", currentUserId);
+    const queryResult = await collection.query({
+        queryEmbeddings: embedding,
+        nResults: limit,
+        include: [IncludeEnum.Documents, IncludeEnum.Metadatas],
+    });
+    console.log("✨ Raw metadatas:", JSON.stringify(queryResult.metadatas, null, 2));
+
+    const filteredQueryResult = queryResult.ids[0].filter((id: string) => {
+        const metadata = queryResult.metadatas[0].find((metadata: any) => metadata.id === id)
+        console.log("✨ Metadata:", metadata);
+        return metadata?.userId === currentUserId
+    })
+
+    console.log("✨ Filtered query result:", filteredQueryResult);
+
+    return filteredQueryResult
 }
 
 export const getProviderAccessToken = async (ctx: Context, provider: string) => {

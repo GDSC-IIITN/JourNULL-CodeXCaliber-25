@@ -35,6 +35,7 @@ export class IntegrationsService {
         })
 
 
+
         // Get today's date range
         const today = new Date()
         today.setHours(0, 0, 0, 0)
@@ -58,7 +59,7 @@ export class IntegrationsService {
             }
         }
 
-        const response = await fetch(`https://photoslibrary.googleapis.com/v1/mediaItems:search`, {
+        const response = await fetch(`https://photoslibrary.googleapis.com/v1/mediaItems`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${account.accessToken || ''}`,

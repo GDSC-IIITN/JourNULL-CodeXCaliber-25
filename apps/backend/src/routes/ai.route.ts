@@ -14,4 +14,9 @@ app.get('/suggestions', async (c) => {
     return result
 })
 
+app.get('/octacat', async (c) => {
+    const result = await AIController.octacat(c)
+    return result
+})
+
 export default app;

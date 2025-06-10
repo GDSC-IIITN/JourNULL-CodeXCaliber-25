@@ -93,6 +93,7 @@ export class JournalService {
             await pookie.add({
                 ids: [journalData.id],
                 metadatas: [{
+                    id: journalData.id,
                     title: journalData.title,
                     content: journalData.content,
                     category: journalData.category,

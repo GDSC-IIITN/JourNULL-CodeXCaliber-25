@@ -83,4 +83,38 @@ export class AIService {
         })
     }
 
+    public static async octacat(ctx: Context, {
+        context
+    }: {
+        context: string
+    }) {
+        const ai = new AI(ctx, 'groq')
+        const user = ctx.get('user')
+
+        const previousEntries = await getRelevantEntries(context, ctx)
+        const prompt = `
+        You are a helpful assistant (octacat) that generates a random playful text for the user.
+        The text should be a random playful text for the user.
+        this is user's screen text:
+        ${context}
+        this is user's profile data:
+        ${user}
+        there should be no other text than the playful text.
+        it should be new everytime.
+        include emojis in the text.
+        include user's name in the text.
+        keep it short and concise.
+        suggest some random activities that the user can do
+        based on the users recent journal entries:
+        ${previousEntries.map(entry => `${entry.title}\n${entry.content}`).join('\n')}
+        do not include any other text than the playful text.
+        do not include text like here is the playful text.
+        text should not be too long.
+        text should be in the same language as the user's screen text.
+        text should be not more than 50 words.
+        `
+        return ai.streamText({
+            prompt
+        })
+    }
 }

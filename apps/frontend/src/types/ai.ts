@@ -8,6 +8,7 @@ export type AiResponse<T = string> = {
 export enum AiEndpoint {
     ANALYZE_JOURNAL = 'analyzeJournal',
     AI_SUGGESTIONS = 'aiSuggestions',
+    OCTACAT = 'octacat',
 }
 
 export type AiSuggestionsResponse = {

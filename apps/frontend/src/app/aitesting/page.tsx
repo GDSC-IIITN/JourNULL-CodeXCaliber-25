@@ -6,14 +6,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from 'react-markdown';
 import { ComicBubble } from "@/components/comic-bubble";
+import { unescapeMarkdown } from "@/lib/utils";
 
-function unescapeMarkdown(text: string): string {
-    return text
-        .replace(/\\n/g, '\n')
-        .replace(/\\"/g, '"')
-        .replace(/\\'/g, "'")
-        .replace(/\\\\/g, '\\');
-}
+
 
 export default function JournalPage() {
     const [journalContent, setJournalContent] = useState("");

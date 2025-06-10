@@ -60,7 +60,7 @@ export const createAuth = async (env: Env) => {
                 scope: [
                     'https://www.googleapis.com/auth/calendar.events.readonly',
                     'https://www.googleapis.com/auth/calendar.readonly',
-                    'https://www.googleapis.com/auth/photoslibrary.readonly'
+                    'https://www.googleapis.com/auth/photoslibrary.readonly',
                 ],
                 accessType: 'offline',
                 prompt: 'consent'
