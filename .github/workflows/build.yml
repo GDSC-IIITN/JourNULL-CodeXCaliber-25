@@ -59,3 +59,11 @@ jobs:
       
       - name: Run Build
         run: pnpm run build
+
+      - name: Publish to Cloudflare Pages (Production) 
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: journull-frontend
+          directory: apps/frontend/.vercel/output/static

@@ -1,3 +1,4 @@
+'use client'
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { Emotion } from "../validation/journal.schema";

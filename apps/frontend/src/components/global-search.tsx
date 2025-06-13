@@ -123,7 +123,6 @@ export default function GlobalSearch() {
         return () => document.removeEventListener('keydown', down)
     }, [])
 
-    console.log("✨ Results in global search:", results);
 
     return (
         // should be in center of the screen
@@ -178,6 +177,9 @@ export default function GlobalSearch() {
                                     value={`${journal.title} ${journal.content || ''}`}
                                     className="hover:cursor-pointer px-4 py-3 hover:bg-accent rounded-md mx-2 my-1"
                                     onSelect={() => {
+                                        router.push(`/journal/${journal.id}`);
+                                    }}
+                                    onClick={() => {
                                         router.push(`/journal/${journal.id}`);
                                     }}
                                 >

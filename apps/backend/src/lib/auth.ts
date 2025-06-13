@@ -47,7 +47,7 @@ export const createAuth = async (env: Env) => {
             }
         }),
 
-        trustedOrigins: [env.FRONTEND_URL],
+        trustedOrigins: [env.FRONTEND_URL, 'https://journull-frontend.pages.dev', 'https://journull-frontend.vercel.app', 'https://journull.harshduche.com'],
 
         emailAndPassword: {
             enabled: true
@@ -82,14 +82,15 @@ export const createAuth = async (env: Env) => {
                 enabled: true, // Enables cross-domain cookies
             },
             defaultCookieAttributes: {
+                domain: '.harshduche.com',
                 sameSite: 'none', // Required for cross-domain cookies
                 secure: true, // Ensures cookies are only sent over HTTPS
-            }
+            },
+            useSecureCookies: true,
         },
         // rateLimit: {
         //     window: 10, // time window in seconds
         //     max: 100, // max requests in the window
         // },
-
     });
 };

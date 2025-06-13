@@ -1,4 +1,5 @@
 "use client"
+export const runtime = 'edge';
 import { Particles } from "@/components/magicui/particles";
 import { ModeToggle } from "@/components/theme/theme-toggle";
 import { SimpleEditor } from "@/components/editor/tiptap-templates/simple/simple-editor";
