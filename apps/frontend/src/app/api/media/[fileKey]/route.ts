@@ -1,3 +1,4 @@
+export const runtime = "edge";
 import { NextRequest } from "next/server";
 import { CloudflareR2Service } from "@/lib/s3/cloudflareR2Service";
 

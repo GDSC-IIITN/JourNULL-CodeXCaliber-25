@@ -1,4 +1,5 @@
 import { defineConfig } from "drizzle-kit";
+import type { Config } from "drizzle-kit";
 
 export default defineConfig({
   out: "./drizzle",
@@ -8,4 +9,4 @@ export default defineConfig({
     url: process.env.DATABASE_URL ?? "",
     authToken: process.env.DATABASE_AUTH_TOKEN ?? "",
   },
-});
+} satisfies Config);

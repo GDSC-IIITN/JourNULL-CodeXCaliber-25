@@ -1,4 +1,4 @@
-import { Axios } from "axios";
+import { Axios, AxiosResponseHeaders } from "axios";
 import {
     CreateJournalInput,
     UpdateJournalInput, createJournalSchema,
@@ -44,5 +44,10 @@ export class JournalAPI {
         const validatedId = journalIdSchema.parse({ id });
         const response = await this.axios.delete(`/journal/${validatedId.id}`);
         return journalResponseSchema.parse(response.data);
+    }
+
+    async getJournalsHeaders(): Promise<AxiosResponseHeaders> {
+        const response = await this.axios.get("/journal");
+        return response.headers as unknown as AxiosResponseHeaders;
     }
 }

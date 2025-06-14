@@ -1,4 +1,4 @@
-// app/api/upload/route.ts
+export const runtime = "edge";
 import axios from "axios";
 import { CloudflareR2Service } from "@/lib/s3/cloudflareR2Service";
 import { NextRequest, NextResponse } from "next/server";

@@ -9,12 +9,13 @@ export class StaticController {
         }
 
         try {
-            const response = await fetch(`http://140.238.229.206:5001/api/image?q=${query}`);
+            const response = await fetch(`https://ghibli-api.harshduche.com/api/image?q=${query}`);
             const data = await response.json();
             return ctx.json(format_response(200, data, {}));
         } catch (error) {
             console.error('Error fetching from Ghibli API:', error);
-            return ctx.json(format_response(500, 'Failed to fetch image from Ghibli API', { is_error: true }));
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            return ctx.json(format_response(500, 'Failed to fetch image from Ghibli API', { is_error: true, meta: { error: errorMessage } }));
         }
     }
 } 

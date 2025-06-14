@@ -1,12 +1,24 @@
 "use client"
 import { ComicBubble } from "./comic-bubble";
-import { useRandomEmoji } from "@/lib/utils";
 import { useOctacat } from "@/hooks/ai";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { MessageLoading } from "./threedot-loader";
 import { playSound } from "@/lib/utils";
 import { unescapeMarkdown } from "@/lib/utils";
+
+export const useRandomEmoji = (interval: number = 1000) => {
+    const [emoji, setEmoji] = useState<string>('');
+    useEffect(() => {
+        const timeout = setInterval(() => {
+            const emojis = ['😊', '😢', '😠', '😨', '😖', '😮', '😐', '😰', '😔', '😫', '😓', '🤷‍♂️'];
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            setEmoji(randomEmoji);
+        }, interval);
+        return () => clearInterval(timeout);
+    }, [interval]);
+    return emoji;
+}
 
 export default function Octacat() {
     const { data: octacatData, trigger, isLoading } = useOctacat();

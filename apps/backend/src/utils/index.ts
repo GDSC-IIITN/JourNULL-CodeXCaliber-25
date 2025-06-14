@@ -10,7 +10,6 @@ import { createAuth } from "@/lib/auth";
 import { eq } from "drizzle-orm";
 import { AI } from "@/lib/ai";
 import { IncludeEnum } from "chromadb";
-import { Q } from "node_modules/@upstash/redis/zmscore-DzNHSWxc.mjs";
 
 export class CloudFlareEmbeddingFunction {
     private api_key: string;
@@ -131,7 +130,7 @@ export const getRelevantEntries = async (current_entry: string, ctx: Context) =>
         return previousEntries
     } catch (error) {
         console.error('Error getting relevant entries:', error);
-        throw new Error('Failed to get relevant entries');
+        return []
     }
 }
 

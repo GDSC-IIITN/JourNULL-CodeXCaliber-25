@@ -19,7 +19,7 @@ const app = new Hono<{
 }>({ strict: false });
 
 app.use('*', cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://journull-frontend.pages.dev', 'https://journull-frontend.vercel.app', 'https://journull.harshduche.com'],
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
     exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
@@ -32,7 +32,7 @@ app.use(poweredBy());
 app.use(logger());
 
 app.use("/api/auth/*", cors({
-    origin: "http://localhost:3000",
+    origin: ['http://localhost:3000', 'https://journull-frontend.pages.dev', 'https://journull-frontend.vercel.app', 'https://journull.harshduche.com'],
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["POST", "GET", "OPTIONS"],
     exposeHeaders: ["Content-Length"],

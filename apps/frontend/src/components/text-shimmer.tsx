@@ -8,7 +8,6 @@ type TextShimmerWave = {
     as?: React.ElementType;
     className?: string;
     duration?: number;
-    zDistance?: number;
     xDistance?: number;
     yDistance?: number;
     spread?: number;
@@ -22,7 +21,6 @@ export function TextShimmerWave({
     as: Component = 'p',
     className,
     duration = 1,
-    zDistance = 10,
     xDistance = 2,
     yDistance = -2,
     spread = 1,
@@ -54,15 +52,15 @@ export function TextShimmerWave({
                             'inline-block whitespace-pre [transform-style:preserve-3d]'
                         )}
                         initial={{
-                            translateZ: 0,
                             scale: 1,
                             rotateY: 0,
                             color: 'var(--base-color)',
+                            x: 0,
+                            y: 0,
                         }}
                         animate={{
-                            translateZ: [0, zDistance, 0],
-                            translateX: [0, xDistance, 0],
-                            translateY: [0, yDistance, 0],
+                            x: [0, xDistance, 0],
+                            y: [0, yDistance, 0],
                             scale: [1, scaleDistance, 1],
                             rotateY: [0, rotateYDistance, 0],
                             color: [
