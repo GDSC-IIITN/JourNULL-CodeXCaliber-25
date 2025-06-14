@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, easeInOut } from "framer-motion";
 interface HandWrittenTitleProps {
     title?: string;
     subtitle?: string;
@@ -16,7 +16,7 @@ function HandWrittenTitle({
             pathLength: 1,
             opacity: 1,
             transition: {
-                pathLength: { duration: 2.5, ease: "easeInOut" },
+                pathLength: { duration: 2.5, ease: easeInOut },
                 opacity: { duration: 0.5 },
             },
         },
