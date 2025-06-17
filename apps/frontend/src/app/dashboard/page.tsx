@@ -11,11 +11,36 @@ import { Header } from "@/components/dashboard/header";
 import { useMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import Octacat from "@/components/octacat";
-export default function Dashboard() {
+import { useUserStore } from "@/store/userStore";
 
+import { useEffect } from "react";
+import { useSession } from "@/lib/auth/auth-client";
+
+export default function Dashboard() {
     const router = useRouter();
     const { data: journals } = useGetJournals();
     const isMobile = useMobile();
+    const session = useSession();
+    const { setUser, setIsLoggedIn } = useUserStore();
+
+    useEffect(() => {
+        if (session.data) {
+            setUser(session.data.user);
+            setIsLoggedIn(true);
+        } else if (session.error) {
+            setUser(null);
+            setIsLoggedIn(false);
+        }
+    }, [session.data, session.error, setUser, setIsLoggedIn]);
+
+    if (session.isPending) {
+        return <div>Loading...</div>
+    }
+
+    if (session.error) {
+        return <div>Error: {session.error.message}</div>
+    }
+
     return (
         <div className="w-screen h-screen flex flex-col font-azeretMono overflow-y-auto dark:bg-black">
             <Particles className="absolute top-0 left-0 w-full h-screen z-0" />
