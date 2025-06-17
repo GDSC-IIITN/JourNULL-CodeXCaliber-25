@@ -4,9 +4,9 @@ import { useOctacat } from "@/hooks/ai";
 import { useEffect, useState, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { MessageLoading } from "./threedot-loader";
-import { playSound } from "@/lib/utils";
 import { unescapeMarkdown } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export const useRandomEmoji = (interval: number = 1000) => {
     const [emoji, setEmoji] = useState<string>('');
@@ -89,10 +89,10 @@ export default function Octacat() {
                     {isLoading && <div className="flex items-center gap-2"><MessageLoading /> <span className="text-sm">{emoji}</span></div>}
                 </ComicBubble>
             </div>
-            <img onClick={() => {
+            <Image onClick={() => {
                 router.push('/profile');
             }} src="https://utfs.io/f/aMMSb4aTvgRAD3XhUF45BaPf63czwTuqO9SoUJKy8NgbYik0" alt="logo" width={100} height={100}
-                className="motion-preset-oscillate motion-duration-2000"
+                className="motion-preset-oscillate motion-duration-2000 cursor-pointer"
             />
         </div>
     )

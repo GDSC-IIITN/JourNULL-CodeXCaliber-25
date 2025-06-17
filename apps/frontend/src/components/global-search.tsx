@@ -14,7 +14,7 @@ import { useRecentSearchStore } from "@/store/searchStore";
 
 export default function GlobalSearch(
 ) {
-    const { recentSearch, setRecentSearch } = useRecentSearchStore();
+    const { recentSearch } = useRecentSearchStore();
     const [query, setQuery] = useState("");
     const [results, setResults] = useState<GlobalSearchResponse[]>(recentSearch);
     const [loading, setLoading] = useState(false);
@@ -121,7 +121,7 @@ export default function GlobalSearch(
 
         document.addEventListener('keydown', down)
         return () => document.removeEventListener('keydown', down)
-    }, [])
+    }, [setTrigger, trigger])
 
 
     return (

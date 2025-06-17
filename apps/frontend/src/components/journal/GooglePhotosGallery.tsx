@@ -1,5 +1,6 @@
 import React from 'react';
 import { DraggableCardBody } from "@/components/ui/draggable-card";
+import Image from "next/image";
 
 interface MediaItem {
     filename: string;
@@ -36,9 +37,11 @@ export const GooglePhotosGallery: React.FC<GooglePhotosGalleryProps> = ({ mediaI
                     id={item.id}
                     className={item.className}
                 >
-                    <img
+                    <Image
                         src={item.image}
                         alt={item.title}
+                        width={320}
+                        height={320}
                         className="pointer-events-none relative z-10 h-80 w-80 object-cover"
                     />
                     <h3 className="mt-4 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">

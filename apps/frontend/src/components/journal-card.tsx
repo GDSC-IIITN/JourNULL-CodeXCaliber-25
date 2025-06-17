@@ -1,6 +1,5 @@
 import { useGhibli } from "@/hooks/ghibli";
 import { Journal } from "@/lib/validation/journal.schema";
-import { Tilt } from "@/components/tilt";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";

@@ -1,18 +1,11 @@
-import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+    DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuShortcut, DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import { signOut } from "@/lib/auth/auth-client";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";

@@ -1,7 +1,6 @@
 "use client"
 export const runtime = 'edge';
 import { Particles } from "@/components/magicui/particles";
-import { ModeToggle } from "@/components/theme/theme-toggle";
 import { SimpleEditor } from "@/components/editor/tiptap-templates/simple/simple-editor";
 import { DraggableCardContainer } from "@/components/ui/draggable-card";
 import { useIntegrations } from "@/hooks/integrations";
@@ -22,7 +21,7 @@ export default function RecentsPage() {
     const { id } = useParams();
     const { mutate: createJournal, isPending: isCreating } = useCreateJournal();
     const { mutate: updateJournal } = useUpdateJournal(id as string);
-    const { data: ghibliData, isLoading: isGhibliLoading } = useGhibli(id as string);
+    const { data: ghibliData } = useGhibli(id as string);
     const { data: journal, isLoading: isJournalLoading, error: journalError } = useGetJournal(id as string);
 
     // Memoize the initial content to prevent unnecessary re-renders
@@ -34,14 +33,14 @@ export default function RecentsPage() {
         }
 
         return journal.message.content || "";
-    }, [journal, id]);
+    }, [journal]);
     const { content, setContent, saveStatus } = useJournalSave({
         updateJournal: updateJournal,
         initialContent,
     });
 
     const { getGooglePhotosEvents } = useIntegrations();
-    const { data: googlePhotosEvents, isLoading, error } = getGooglePhotosEvents;
+    const { data: googlePhotosEvents, error } = getGooglePhotosEvents;
 
     const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 

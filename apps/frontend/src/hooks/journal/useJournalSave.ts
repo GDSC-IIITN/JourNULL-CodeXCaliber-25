@@ -23,7 +23,7 @@ export const useJournalSave = ({ updateJournal, initialContent = '' }: UseJourna
             setContent(initialContent);
             lastSavedContent.current = initialContent;
         }
-    }, [initialContent]);
+    }, [initialContent, content]);
 
     const saveContent = useCallback((content: string) => {
         if (!content || content === lastSavedContent.current) return;
@@ -73,6 +73,7 @@ export const useJournalSave = ({ updateJournal, initialContent = '' }: UseJourna
                 }
             }
         }, 3000),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [saveContent]
     );
 

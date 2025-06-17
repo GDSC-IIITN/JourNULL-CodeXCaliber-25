@@ -5,10 +5,9 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel, DropdownMenuSeparator,
     DropdownMenuShortcut, DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
-import { Bot, Link, MoreVertical, Settings, Share, Trash2 } from "lucide-react"
+} from "@/components/ui/dropdown-menu";
+import { Bot, MoreVertical, Settings, Share, Trash2 } from "lucide-react";
 import { useDeleteJournal } from "@/hooks/journal";
-import { DropdownMenuItemIndicator } from "@radix-ui/react-dropdown-menu";
 
 export function JournalDropdown({
     journalId

@@ -1,9 +1,8 @@
-import { signOut, useSession } from "@/lib/auth/auth-client";
+import { useSession } from "@/lib/auth/auth-client";
 import { ModeToggle } from "../theme/theme-toggle";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { Input } from "../ui/input";
-import { useRouter } from "next/navigation";
 import { Skeleton } from "../ui/skeleton";
 import { ProfileDropdown } from "./profile-dropdown";
 import { useTriggerStore } from "@/store/triggerStore";
@@ -18,7 +17,6 @@ export function Header({
     modeToggle?: boolean;
 }) {
     const session = useSession()
-    const router = useRouter();
     const { setTrigger } = useTriggerStore();
     if (session.isPending) {
         return <Skeleton className="w-full h-10" />
