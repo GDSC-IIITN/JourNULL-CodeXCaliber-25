@@ -15,10 +15,12 @@ import { TextShimmerWave } from "@/components/text-shimmer";
 import Image from "next/image";
 import { useGhibli } from "@/hooks/ghibli";
 import { Header } from "@/components/dashboard/header";
+import { useMobile } from "@/hooks/use-mobile";
 
 export default function RecentsPage() {
     const router = useRouter();
     const { id } = useParams();
+    const isMobile = useMobile();
     const { mutate: createJournal, isPending: isCreating } = useCreateJournal();
     const { mutate: updateJournal } = useUpdateJournal(id as string);
     const { data: ghibliData } = useGhibli(id as string);
@@ -126,7 +128,7 @@ export default function RecentsPage() {
                 </div>
                 {/* Scrollable Content */}
                 <div className="flex-1 min-h-0 overflow-y-auto scroll-smooth bouncy-scroll">
-                    <div className="w-screen h-[400px] relative">
+                    <div className={`w-screen h-[400px] relative ${isMobile ? 'h-[200px]' : ''}`}>
                         <Image src={ghibliData?.url || 'https://www.ghibli.jp/images/common/logo.png'} alt="journal-bg" width={1000} height={400} className=" w-full h-full object-cover" />
                         <div className="absolute top-0 left-0 w-full h-[400px] bg-black/40">
                             <h4 className="capitalize text-white/80 text-4xl font-bold text-right text-bottom px-4 pt-4">
