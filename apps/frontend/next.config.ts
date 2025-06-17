@@ -28,6 +28,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'www.ghibli.jp',
       },
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+      }
     ],
   },
   reactStrictMode: false,
