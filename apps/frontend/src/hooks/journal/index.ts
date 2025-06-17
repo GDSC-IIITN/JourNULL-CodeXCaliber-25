@@ -106,10 +106,10 @@ export const useUpdateJournal = (id: string) => {
     return updateJournal;
 };
 
-export const useDeleteJournal = (id: string) => {
+export const useDeleteJournal = () => {
     const queryClient = useQueryClient();
     const deleteJournal = useMutation({
-        mutationFn: async () => {
+        mutationFn: async (id: string) => {
             try {
                 return await api.journal.deleteJournal(id);
             } catch (error) {
@@ -118,7 +118,7 @@ export const useDeleteJournal = (id: string) => {
             }
         },
         mutationKey: [JOURNAL.DELETE_JOURNAL],
-        onMutate: async () => {
+        onMutate: async (id) => {
             await queryClient.cancelQueries({ queryKey: [JOURNAL.JOURNALS] });
             const previousJournals = queryClient.getQueryData([JOURNAL.JOURNALS]);
             queryClient.setQueryData([JOURNAL.JOURNALS], (old: Journal[]) =>

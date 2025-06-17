@@ -43,7 +43,7 @@ export class JournalAPI {
     async deleteJournal(id: string): Promise<JournalResponse> {
         const validatedId = journalIdSchema.parse({ id });
         const response = await this.axios.delete(`/journal/${validatedId.id}`);
-        return journalResponseSchema.parse(response.data);
+        return response.data;
     }
 
     async getJournalsHeaders(): Promise<AxiosResponseHeaders> {

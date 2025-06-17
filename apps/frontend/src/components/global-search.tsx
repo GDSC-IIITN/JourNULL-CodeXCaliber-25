@@ -8,24 +8,26 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import Fuse from "fuse.js";
 import { useGetJournals } from "@/hooks/journal";
+import { useTriggerStore } from "@/store/triggerStore";
+import { useRecentSearchStore } from "@/store/searchStore";
 
 
-
-export default function GlobalSearch() {
+export default function GlobalSearch(
+) {
+    const { recentSearch, setRecentSearch } = useRecentSearchStore();
     const [query, setQuery] = useState("");
-    const [results, setResults] = useState<GlobalSearchResponse[]>([]);
+    const [results, setResults] = useState<GlobalSearchResponse[]>(recentSearch);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const [open, setOpen] = useState(false);
+    const { trigger, setTrigger } = useTriggerStore();
     const { data: localJournals } = useGetJournals();
+
 
     useEffect(() => {
         if (!query.trim()) {
             setResults([]);
             return;
         }
-
-        console.log("✨ Query:", query);
 
         const controller = new AbortController();
 
@@ -44,7 +46,6 @@ export default function GlobalSearch() {
                     return res.json();
                 })
                 .then((data) => {
-                    console.log("✨ Raw API response:", data);
                     if (Array.isArray(data) && data.length > 0) {
                         setResults(data);
                     } else if (Array.isArray(localJournals) && localJournals.length > 0) {
@@ -74,7 +75,6 @@ export default function GlobalSearch() {
                 })
                 .catch((err) => {
                     if (err.name !== "AbortError") {
-                        console.error("✨ Fetch Error:", err);
                         // Fallback to fuzzy search on local journals if fetch fails
                         if (Array.isArray(localJournals) && localJournals.length > 0) {
                             const fuse = new Fuse(localJournals, {
@@ -115,7 +115,7 @@ export default function GlobalSearch() {
         const down = (e: KeyboardEvent) => {
             if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault()
-                setOpen((open) => !open)
+                setTrigger(!trigger)
             }
         }
 
@@ -127,8 +127,8 @@ export default function GlobalSearch() {
     return (
         // should be in center of the screen
         <Command.Dialog
-            open={open}
-            onOpenChange={setOpen}
+            open={trigger}
+            onOpenChange={setTrigger}
             label="Global Search"
             className="fixed inset-0 z-50 flex motion-preset-slide-right transition-all duration-300 ease-in-out items-center justify-center w-full h-full bg-transparent"
             onKeyDown={(e) => {
@@ -138,11 +138,11 @@ export default function GlobalSearch() {
                 }
                 if (e.key === "Escape") {
                     e.preventDefault();
-                    setOpen(false);
+                    setTrigger(false);
                 }
             }}
             onBlur={() => {
-                setOpen(false);
+                setTrigger(false);
             }}
         >
             <div className="w-[600px] rounded-xl border bg-background shadow-xl">
@@ -183,7 +183,9 @@ export default function GlobalSearch() {
                                         router.push(`/journal/${journal.id}`);
                                     }}
                                 >
-                                    <div className="w-full">
+                                    <div className="w-full hover:cursor-pointer" onClick={() => {
+                                        router.push(`/journal/${journal.id}`);
+                                    }}>
                                         <p className="font-medium text-sm mb-1">{journal.title}</p>
                                         <p dangerouslySetInnerHTML={{ __html: journal.content?.slice(0, 100) + (journal.content && journal.content.length > 100 ? "..." : "") }} className="text-muted-foreground text-xs truncate" />
                                     </div>
