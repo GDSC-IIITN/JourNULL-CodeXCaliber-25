@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
-    CardDescription, CardHeader,
+    CardDescription, CardFooter, CardHeader,
     CardTitle
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ import { Loader2, X } from "lucide-react";
 import { signUp } from "@/lib/auth/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SignUp() {
     const [firstName, setFirstName] = useState("");
@@ -40,7 +41,7 @@ export default function SignUp() {
     };
 
     return (
-        <Card className="z-50 rounded-md rounded-t-none max-w-md">
+        <Card className="z-50 max-w-md motion-preset-blur-right ">
             <CardHeader>
                 <CardTitle className="text-lg md:text-xl">Sign Up</CardTitle>
                 <CardDescription className="text-xs md:text-sm">
@@ -145,7 +146,7 @@ export default function SignUp() {
                     </div>
                     <Button
                         type="submit"
-                        className="w-full"
+                        className="w-full bg-[#2323FF] text-white"
                         disabled={loading}
                         onClick={async () => {
                             await signUp.email({
@@ -179,6 +180,11 @@ export default function SignUp() {
                     </Button>
                 </div>
             </CardContent>
+            <CardFooter>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Already have an account? <Link href="/auth/signin" className="text-blue-500 dark:text-blue-400">Sign in</Link>
+                </p>
+            </CardFooter>
         </Card>
     );
 }

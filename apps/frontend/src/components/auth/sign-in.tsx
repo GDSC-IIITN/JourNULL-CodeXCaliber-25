@@ -18,7 +18,7 @@ export default function SignIn() {
     const [rememberMe, setRememberMe] = useState(false);
 
     return (
-        <Card className="w-full max-w-sm m-6">
+        <Card className="w-full max-w-sm m-6 motion-preset-blur-right">
             <CardHeader>
                 <CardTitle className="text-lg md:text-xl">Sign In</CardTitle>
                 <CardDescription className="text-xs md:text-sm">
@@ -105,6 +105,10 @@ export default function SignIn() {
                             <p> Login </p>
                         )}
                     </Button>
+
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                        New here? <Link href="/auth/signup" className="text-blue-500 dark:text-blue-400">Sign up</Link>
+                    </p>
 
 
 
